@@ -1,7 +1,7 @@
 # Desarrollo de Aplicaciones Web
 
-*Autor:* Nicolas Joel Cáceres Parra  
-*Link Aplicación:* ...
+> **Autor:** Nicolas Joel Cáceres Parra  
+**Link Aplicación:** ...
 
 ## Introducción al Asíncronismo
 
