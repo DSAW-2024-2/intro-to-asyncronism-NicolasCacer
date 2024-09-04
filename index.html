@@ -57,14 +57,14 @@
         </div>
     </aside>
 
-    <main class="min-h-[480px] max-h-[700px] flex flex-col items-center p-[50px]">
+    <main class="min-h-[480px] max-h-[800px] flex flex-col items-center p-[30px]">
         <div class="flex items-center pb-3">
             <input class="rounded-l-lg w-[200px] p-[7px] sm:text-xl sm:w-[350px]" type="text" placeholder="Enter a pokemon name">
             <button id="searchButton" data-tooltip-target="tooltip-default">
                 <svg class="w-10 h-10 bg-blue-500 p-1 rounded-r-lg sm:h-11 hover:bg-blue-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path d="M21 38c9.389 0 17-7.611 17-17S30.389 4 21 4S4 11.611 4 21s7.611 17 17 17Z"/><path stroke-linecap="round" d="M26.657 14.343A7.98 7.98 0 0 0 21 12a7.98 7.98 0 0 0-5.657 2.343m17.879 18.879l8.485 8.485"/></g></svg>
             </button>
             <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                Search Pokemon
+                Search
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
         </div>   
@@ -77,6 +77,9 @@
                 <p id="pokemonAbilities" class="hidden text-xs sm:text-base"><strong>Abilities: </strong></p>
             </div>
         </div>
+        
+        <div id="pokemonCardContainer" class="hidden flex flex-wrap mt-6 gap-4 justify-evenly w-full min-h-[550px] bg-blue-100 rounded-lg shadow-lg border-blue-200 border-2 overflow-auto p-4"></div>
+        <button id="loadPokemons" class="hidden bg-blue-700 p-3 rounded-lg opacity-[0.5] hover:opacity-[1] text-white m-3">Load More</button>
     </main>
 
     <footer class="bg-blue-600 h-10 flex items-center justify-end w-full gap-5 px-3 pr-2 md:h-14">
