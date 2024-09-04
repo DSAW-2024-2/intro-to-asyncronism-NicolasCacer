@@ -6,6 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
     <title>Googlemon</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxcmVtIiBoZWlnaHQ9IjFyZW0iIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSJub25lIi8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiA0YzQuMDggMCA3LjQ1IDMuMDUgNy45NCA3aC00LjA2Yy0uNDUtMS43My0yLjAyLTMtMy44OC0zcy0zLjQzIDEuMjctMy44NyAzSDQuMDZDNC41NSA3LjA1IDcuOTIgNCAxMiA0IiBvcGFjaXR5PSIwLjM1Ii8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwczEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAybTAgMmM0LjA4IDAgNy40NSAzLjA1IDcuOTQgN2gtNC4wNmMtLjQ1LTEuNzMtMi4wMi0zLTMuODgtM3MtMy40MyAxLjI3LTMuODcgM0g0LjA2QzQuNTUgNy4wNSA3LjkyIDQgMTIgNG0yIDhjMCAxLjEtLjkgMi0yIDJzLTItLjktMi0ycy45LTIgMi0yczIgLjkgMiAybS0yIDhjLTQuMDggMC03LjQ1LTMuMDUtNy45NC03aDQuMDZjLjQ0IDEuNzMgMi4wMSAzIDMuODcgM3MzLjQzLTEuMjcgMy44Ny0zaDQuMDZjLS40NyAzLjk1LTMuODQgNy03LjkyIDciLz48L3N2Zz4=" type="image/svg+xml">
     <style>
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -38,8 +39,8 @@
             <h1 class="font-bold text-xl text-white">Googlemon</h1>
         </div>
         <section class="flex gap-5 m-3 text-sm items-center">
-            <p class="text-white text-md font-bold hover:text-gray-900 sm:text-xl">Home</p>
-            <p class="text-white text-md font-bold hover:text-gray-900 sm:text-xl">About</p> 
+            <button class="text-white text-md font-bold hover:text-gray-900 sm:text-xl" onclick="location.reload();">Home</button>
+            <button class="text-white text-md font-bold hover:text-gray-900 sm:text-xl">About</button>
         </section> 
     </nav>
 
@@ -60,11 +61,12 @@
     <main class="min-h-[480px] max-h-[800px] flex flex-col items-center p-[30px]">
         <div class="flex items-center pb-3">
             <input class="rounded-l-lg w-[200px] p-[7px] sm:text-xl sm:w-[350px]" type="text" placeholder="Enter a pokemon name">
-            <button id="searchButton" data-tooltip-target="tooltip-default">
+            <button id="searchButton">
                 <svg class="w-10 h-10 bg-blue-500 p-1 rounded-r-lg sm:h-11 hover:bg-blue-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path d="M21 38c9.389 0 17-7.611 17-17S30.389 4 21 4S4 11.611 4 21s7.611 17 17 17Z"/><path stroke-linecap="round" d="M26.657 14.343A7.98 7.98 0 0 0 21 12a7.98 7.98 0 0 0-5.657 2.343m17.879 18.879l8.485 8.485"/></g></svg>
             </button>
-            <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                Search
+            <svg class="w-6 h-6 ml-5" data-tooltip-target="tooltip-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="#2828ac" d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896m23.744 191.488c-52.096 0-92.928 14.784-123.2 44.352c-30.976 29.568-45.76 70.4-45.76 122.496h80.256c0-29.568 5.632-52.8 17.6-68.992c13.376-19.712 35.2-28.864 66.176-28.864c23.936 0 42.944 6.336 56.32 19.712c12.672 13.376 19.712 31.68 19.712 54.912c0 17.6-6.336 34.496-19.008 49.984l-8.448 9.856c-45.76 40.832-73.216 70.4-82.368 89.408c-9.856 19.008-14.08 42.24-14.08 68.992v9.856h80.96v-9.856c0-16.896 3.52-31.68 10.56-45.76c6.336-12.672 15.488-24.64 28.16-35.2c33.792-29.568 54.208-48.576 60.544-55.616c16.896-22.528 26.048-51.392 26.048-86.592q0-64.416-42.24-101.376c-28.16-25.344-65.472-37.312-111.232-37.312m-12.672 406.208a54.27 54.27 0 0 0-38.72 14.784a49.4 49.4 0 0 0-15.488 38.016c0 15.488 4.928 28.16 15.488 38.016A54.85 54.85 0 0 0 523.072 768c15.488 0 28.16-4.928 38.72-14.784a51.52 51.52 0 0 0 16.192-38.72a51.97 51.97 0 0 0-15.488-38.016a55.94 55.94 0 0 0-39.424-14.784"/></svg>
+            <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-500 opacity-[0.8] rounded-lg shadow-sm opacity-0 tooltip">
+                Leave in blank to search all pokemons
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
         </div>   
