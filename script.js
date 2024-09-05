@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const pokemonsCardsContainer = document.getElementById('pokemonsCardsContainer');
     const loadPokemons = document.getElementById('loadPokemons');
     const questionMark = document.getElementById('questionMark');
-    const loadingAnimation = document.getElementById('loadingAnimation');
     const returnButton = document.getElementById('returnButton');
-    const incrementPokemonsList = 8;
+    const pokemonsIncrement = document.getElementById('pokemonsIncrement');
+
     let visiblePokemons = 0;
-    let limit = incrementPokemonsList;
+    let limit = parseInt(pokemonsIncrement.value,10);
 
     window.addEventListener('beforeunload', () => {
         document.body.classList.remove('fade-in');
@@ -22,9 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     returnButton.classList.add('hidden');
+    pokemonsIncrement.classList.add('hidden');
 
     async function fetchPokemonsList(offset) {
         try {
+            limit = parseInt(pokemonsIncrement.value,10);
             if (offset == true){
                 limit = visiblePokemons;
                 visiblePokemons = 0;
@@ -57,10 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
             pokemonsCardsContainer.classList.remove('hidden')
             loadPokemons.classList.remove('hidden');
             returnButton.classList.remove('hidden');
+            pokemonsIncrement.classList.add('md:block');
             visiblePokemons += limit;
-            limit = incrementPokemonsList;
         } catch (error) {
           console.error('Error fetching Pokémon data:', error);
+          alert('Something went wrong or there are no more pokemons')
         }
     }
 
@@ -91,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pokemonsCardsContainer.classList.add('hidden')
                 loadPokemons.classList.add('hidden');
                 returnButton.classList.remove('hidden');
+                pokemonsIncrement.classList.add('hidden');
             } catch (error) {
                 console.error('Error fetching Pokemon data:', error);
                 alert('Pokemon not found or an error occurred.');
@@ -106,7 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    searchButton.addEventListener('click', async () => {fetchPokemon(), {trigger: 'hover'}
+    searchButton.addEventListener('click', async () => {
+        if (validateIncrement(parseInt(pokemonsIncrement.value, 10))==true){
+            fetchPokemon(),
+            {trigger: 'hover'};
+        }
+        else {
+            alert('Choose a number between 1 and 20')
+        }
     });
 
     questionMark.addEventListener('click', async () => {trigger: 'hover'});
@@ -117,10 +128,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function validateIncrement(input) {
+        return input >= 1 && input <= 20;
+    }
+    
+
     loadPokemons.addEventListener('click',()=>{
-        fetchPokemonsList();
+        if (validateIncrement(parseInt(pokemonsIncrement.value, 10))==true){
+            fetchPokemonsList();
+        }
+        else {
+            alert('Choose a number between 1 and 20')
+        }
+
     }
     );
+
+    pokemonsIncrement.addEventListener('input',function(){
+         if (!validateIncrement(parseInt(pokemonsIncrement.value, 10))){
+            pokemonsIncrement.classList.add('bg-red-100','ring-2', 'ring-red-500');
+         }
+         else{
+            pokemonsIncrement.classList.remove('bg-red-100','ring-2', 'ring-red-500');
+         }
+    })
 
     returnButton.addEventListener('click', () => {
         if (inputField.value == "") {
