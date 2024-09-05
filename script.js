@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadPokemons.scrollIntoView({ behavior: 'smooth' });
             
         } else {
-            window.location.assign('../index.html');
+            window.location.assign('https://dsaw-2024-2.github.io/intro-to-asyncronism-NicolasCacer/');
 }
     });
     
