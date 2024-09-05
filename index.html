@@ -80,7 +80,7 @@
 
     <main class="h-auto flex flex-col items-center p-[30px]">
         <div class="flex flex-col justify-center items-center">
-            <p class="bg-blue-100 rounded-lg border-2 shadow-lg border-blue-700 min-w-[300px] p-2 mb-5 text-justify text-blue-900 text-md sm:text-xl">This is Googlemon, a web aplication that uses API's to get you information about Pokemons. You can type in a name or take a look to all of them by clicking the search button. ¡Have fun learning about Pokemons!</p>
+            <p id="introParagraph" class="bg-blue-100 rounded-lg border-2 shadow-lg border-blue-700 min-w-[300px] p-2 mb-5 text-justify text-blue-900 text-md sm:text-xl">This is Googlemon, a web aplication that uses API's to get you information about Pokemons. You can type in a name or take a look to all of them by clicking the search button. ¡Have fun learning about Pokemons!</p>
             <section class="flex items-center pb-3">
                 <input class="rounded-l-lg min-w-[250px] p-[7px] sm:text-xl sm:w-[550px]" type="text" placeholder="Enter a pokemon name">
                 <button id="searchButton">
@@ -93,8 +93,8 @@
                 </div>    
             </section>
         </div>   
-        <div id="pokemonCard" class="max-w-[250px] md:max-w-[350px] h-auto mt-3 bg-white rounded-lg overflow-auto flex flex-col">
-            <img class="w-[250px] md:w-[350px] self-center" src="./image.png" alt="pokemon image" />
+        <div id="pokemonCard" class="w-[250px] h-auto sm:w-[350px] mt-3 bg-white rounded-lg overflow-auto flex flex-col">
+            <img class="w-[250px] min-h-[250px] sm:w-[350px] sm:h-[250px] self-center" src="./image.png" alt="pokemon image" />
             <div class="flex flex-col m-2 p-2 gap-2">
                 <p id="pokemonName" class="hidden self-center font-bold text-base sm:text-xl">Pikachu</p>
                 <p id="pokemonWeight" class="hidden text-xs sm:text-base"><strong>Weight: </strong></p>
@@ -115,7 +115,7 @@
                     </svg>
                     Load More
             </button>
-            <input class="hidden md:hidden rounded-lg text-xl" type="number" id="pokemonsIncrement" min="1" max="20" value="4">
+            <input class="hidden md:hidden rounded-lg text-xl" type="number" id="pokemonsIncrement" min="1" max="20" value="3">
         </div>
     </main>
 
