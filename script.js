@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pokemonsCardsContainer.classList.remove('hidden')
             loadPokemons.classList.remove('hidden');
             returnButton.classList.remove('hidden');
+            pokemonsIncrement.classList.remove('md:hidden');
             pokemonsIncrement.classList.add('md:block');
             visiblePokemons += limit;
         } catch (error) {
@@ -94,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pokemonsCardsContainer.classList.add('hidden')
                 loadPokemons.classList.add('hidden');
                 returnButton.classList.remove('hidden');
-                pokemonsIncrement.classList.add('hidden');
+                pokemonsIncrement.classList.add('md:hidden');
             } catch (error) {
                 console.error('Error fetching Pokemon data:', error);
                 alert('Pokemon not found or an error occurred.');
@@ -157,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (inputField.value == "") {
             pokemonsCardsContainer.innerHTML = "";
             fetchPokemonsList(true);
+            pokemonsIncrement.classList.add('md:block');
             loadPokemons.scrollIntoView({ behavior: 'smooth' });
             
         } else {
