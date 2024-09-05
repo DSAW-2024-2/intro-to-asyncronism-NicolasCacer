@@ -28,63 +28,95 @@
     </style>
 </head>
 
-<body class="max-w-[1440px] m-0 p-0 fade-in">
+<body class="max-w-[1440px] h-auto m-0 p-0 fade-in flex flex-col justify-between">
 
     <nav class="flex max-w-screen h-[70px] bg-blue-700 justify-between items-center m-0 p-0">
         <div class="flex items-center p-2 gap-3">
-            <button class ="hidden md:block hover:bg-blue-500 rounded-lg p-2 min-h-[3rem] min-w-[3rem]" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
-                <svg class="self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="white" d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z"/></g></svg>
+            <button class ="hover:bg-blue-500 rounded-lg md:p-2" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
+                <svg class="self-center w-[20px] h-[20px] md:w-[30px] md:h-[30px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="white" d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z"/></g></svg>
             </button>
             <svg class="min-h-10 min-w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.08 0 7.45 3.05 7.94 7h-4.06c-.45-1.73-2.02-3-3.88-3s-3.43 1.27-3.87 3H4.06C4.55 7.05 7.92 4 12 4" opacity="0.35"/><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 2c4.08 0 7.45 3.05 7.94 7h-4.06c-.45-1.73-2.02-3-3.88-3s-3.43 1.27-3.87 3H4.06C4.55 7.05 7.92 4 12 4m2 8c0 1.1-.9 2-2 2s-2-.9-2-2s.9-2 2-2s2 .9 2 2m-2 8c-4.08 0-7.45-3.05-7.94-7h4.06c.44 1.73 2.01 3 3.87 3s3.43-1.27 3.87-3h4.06c-.47 3.95-3.84 7-7.92 7"/></svg>
-            <h1 class="font-bold text-xl text-white">Googlemon</h1>
+            <h1 class="font-bold text-white md:text-3xl">Googlemon</h1>
         </div>
         <section class="flex gap-5 m-3 text-sm items-center">
-            <button class="text-white text-md font-bold hover:text-gray-900 sm:text-xl" onclick="location.reload();">Home</button>
-            <button class="text-white text-md font-bold hover:text-gray-900 sm:text-xl">About</button>
+            <button class="text-white text-md font-bold hover:text-gray-900 hover:bg-blue-500 sm:text-xl sm:p-2 sm:rounded-lg" onclick="location.reload();">Home</button>
+            <button class="text-white text-md font-bold hover:text-gray-900 hover:bg-blue-500 sm:text-xl sm:p-2 sm:rounded-lg">About</button>
         </section> 
     </nav>
 
     <aside>
-        <div id="drawer-navigation" class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-blue-900" tabindex="-1" aria-labelledby="drawer-navigation-label">
+        <div id="drawer-navigation" class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-blue-900 flex flex-col justify-start items-start" tabindex="-1" aria-labelledby="drawer-navigation-label">
             <h1 id="drawer-navigation-label" class="text-base font-semibold text-gray-300 uppercase">Menu</h1>
             <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="text-gray-400 bg-transparent hover:bg-gray-500 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center" >
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
             <div class="w-full h-[90%] flex flex-col justify-start items-start gap-3 py-3">
-                <a href="https://pokeapi.co/#google_vignette" class="border-2 border-blue-700 hover:bg-blue-700 flex justify-start items-center w-full rounded-md p-2 text-gray-300 font-bold text-muted">
+                <a href="https://pokeapi.co/#google_vignette" target="_blank" class="border-2 border-blue-700 hover:bg-blue-700 flex justify-start items-center w-full rounded-md p-2 text-gray-300 font-bold text-muted">
                     API
                 </a>
-            </div>
+                <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="border-2 border-blue-700 hover:bg-blue-700 flex justify-start items-center w-full rounded-md p-2 text-gray-300 font-bold text-muted" type="button">Endpoints<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                    </button>
+                    <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+                        <li>
+                            <a href="" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pokemon</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Weight</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Habitat</a>
+                        </li>
+                        <li>
+                            <a href="https://pokeapi.co/docs/v2#abilities" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Abilities</a>
+                        </li>
+                        </ul>
+                    </div>
+            </div>                
         </div>
     </aside>
 
-    <main class="min-h-[480px] max-h-[800px] flex flex-col items-center p-[30px]">
-        <div class="flex items-center pb-3">
-            <input class="rounded-l-lg w-[200px] p-[7px] sm:text-xl sm:w-[350px]" type="text" placeholder="Enter a pokemon name">
-            <button id="searchButton">
-                <svg class="w-10 h-10 bg-blue-500 p-1 rounded-r-lg sm:h-11 hover:bg-blue-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path d="M21 38c9.389 0 17-7.611 17-17S30.389 4 21 4S4 11.611 4 21s7.611 17 17 17Z"/><path stroke-linecap="round" d="M26.657 14.343A7.98 7.98 0 0 0 21 12a7.98 7.98 0 0 0-5.657 2.343m17.879 18.879l8.485 8.485"/></g></svg>
-            </button>
-            <svg class="w-6 h-6 ml-5" data-tooltip-target="tooltip-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="#2828ac" d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896m23.744 191.488c-52.096 0-92.928 14.784-123.2 44.352c-30.976 29.568-45.76 70.4-45.76 122.496h80.256c0-29.568 5.632-52.8 17.6-68.992c13.376-19.712 35.2-28.864 66.176-28.864c23.936 0 42.944 6.336 56.32 19.712c12.672 13.376 19.712 31.68 19.712 54.912c0 17.6-6.336 34.496-19.008 49.984l-8.448 9.856c-45.76 40.832-73.216 70.4-82.368 89.408c-9.856 19.008-14.08 42.24-14.08 68.992v9.856h80.96v-9.856c0-16.896 3.52-31.68 10.56-45.76c6.336-12.672 15.488-24.64 28.16-35.2c33.792-29.568 54.208-48.576 60.544-55.616c16.896-22.528 26.048-51.392 26.048-86.592q0-64.416-42.24-101.376c-28.16-25.344-65.472-37.312-111.232-37.312m-12.672 406.208a54.27 54.27 0 0 0-38.72 14.784a49.4 49.4 0 0 0-15.488 38.016c0 15.488 4.928 28.16 15.488 38.016A54.85 54.85 0 0 0 523.072 768c15.488 0 28.16-4.928 38.72-14.784a51.52 51.52 0 0 0 16.192-38.72a51.97 51.97 0 0 0-15.488-38.016a55.94 55.94 0 0 0-39.424-14.784"/></svg>
-            <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-500 opacity-[0.8] rounded-lg shadow-sm opacity-0 tooltip">
-                Leave in blank to search all pokemons
-                <div class="tooltip-arrow" data-popper-arrow></div>
-            </div>
+    <main class="h-auto flex flex-col items-center p-[30px]">
+        <div class="flex flex-col justify-center items-center">
+            <p class="bg-blue-100 rounded-lg border-2 shadow-lg border-blue-700 min-w-[300px] p-2 mb-5 text-justify text-blue-900 text-md sm:text-xl">This is Googlemon, a web aplication that uses API's to get you information about Pokemons. You can type in a name or take a look to all of them by clicking the search button. ¡Have fun learning about Pokemons!</p>
+            <section class="flex items-center pb-3">
+                <input class="rounded-l-lg w-[200px] p-[7px] sm:text-xl sm:w-[350px]" type="text" placeholder="Enter a pokemon name">
+                <button id="searchButton">
+                    <svg class="w-10 h-10 bg-blue-500 p-1 rounded-r-lg sm:h-11 hover:bg-blue-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path d="M21 38c9.389 0 17-7.611 17-17S30.389 4 21 4S4 11.611 4 21s7.611 17 17 17Z"/><path stroke-linecap="round" d="M26.657 14.343A7.98 7.98 0 0 0 21 12a7.98 7.98 0 0 0-5.657 2.343m17.879 18.879l8.485 8.485"/></g></svg>
+                </button>
+                <svg id="questionMark" class="w-6 h-6 ml-5 hidden md:block" data-tooltip-target="tooltip-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="#2828ac" d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896m23.744 191.488c-52.096 0-92.928 14.784-123.2 44.352c-30.976 29.568-45.76 70.4-45.76 122.496h80.256c0-29.568 5.632-52.8 17.6-68.992c13.376-19.712 35.2-28.864 66.176-28.864c23.936 0 42.944 6.336 56.32 19.712c12.672 13.376 19.712 31.68 19.712 54.912c0 17.6-6.336 34.496-19.008 49.984l-8.448 9.856c-45.76 40.832-73.216 70.4-82.368 89.408c-9.856 19.008-14.08 42.24-14.08 68.992v9.856h80.96v-9.856c0-16.896 3.52-31.68 10.56-45.76c6.336-12.672 15.488-24.64 28.16-35.2c33.792-29.568 54.208-48.576 60.544-55.616c16.896-22.528 26.048-51.392 26.048-86.592q0-64.416-42.24-101.376c-28.16-25.344-65.472-37.312-111.232-37.312m-12.672 406.208a54.27 54.27 0 0 0-38.72 14.784a49.4 49.4 0 0 0-15.488 38.016c0 15.488 4.928 28.16 15.488 38.016A54.85 54.85 0 0 0 523.072 768c15.488 0 28.16-4.928 38.72-14.784a51.52 51.52 0 0 0 16.192-38.72a51.97 51.97 0 0 0-15.488-38.016a55.94 55.94 0 0 0-39.424-14.784"/></svg>
+                <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-500 opacity-[0.8] rounded-lg shadow-sm opacity-0 tooltip">
+                    Leave in blank to search all pokemons
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>    
+            </section>
         </div>   
-        <div id="pokemonCard" class="w-[250px] h-[380px] md:h-[480px] mt-3 md:w-[300px] bg-white rounded-lg overflow-auto flex flex-col">
+        <div id="pokemonCard" class="w-auto h-auto mt-3 bg-white rounded-lg overflow-auto flex flex-col">
             <img class="h-[250px] w-[250px] sm:w-[300px] sm:h-[300px] self-center" src="./image.png" alt="pokemon image" />
-            <div class="flex flex-col p-2 gap-2">
+            <div class="flex flex-col m-2 p-2 gap-2">
                 <p id="pokemonName" class="hidden self-center font-bold text-base sm:text-xl">Pikachu</p>
                 <p id="pokemonWeight" class="hidden text-xs sm:text-base"><strong>Weight: </strong></p>
                 <p id="pokemonHabitat" class="hidden text-xs sm:text-base"><strong>Habitat: </strong></p>
                 <p id="pokemonAbilities" class="hidden text-xs sm:text-base"><strong>Abilities: </strong></p>
             </div>
+            <button id="returnButton" class="bg-blue-500 flex justify-center items-center text-white rounded-lg w-[100px] self-center p-1 m-2 hover:bg-blue-800">
+                <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="white" d="M21 11H6.414l5.293-5.293l-1.414-1.414L2.586 12l7.707 7.707l1.414-1.414L6.414 13H21z"/></svg>
+                Return
+            </button>
         </div>
-        
-        <div id="pokemonCardContainer" class="hidden flex flex-wrap mt-6 gap-4 justify-evenly w-full min-h-[550px] bg-blue-100 rounded-lg shadow-lg border-blue-200 border-2 overflow-auto p-4"></div>
-        <button id="loadPokemons" class="hidden bg-blue-700 p-3 rounded-lg opacity-[0.5] hover:opacity-[1] text-white m-3">Load More</button>
+        <div id="pokemonsCardsContainer" class="hidden flex flex-wrap mt-6 gap-4 justify-evenly w-auto h-auto bg-blue-100 rounded-lg shadow-lg border-blue-200 border-2 p-4"></div>
+        <button id="loadPokemons" class="hidden bg-blue-700 p-3 rounded-lg opacity-[0.5] hover:opacity-[1] focus:ring-2 text-white m-3">
+            <svg id="loadingAnimation" aria-hidden="true" role="status" class="hidden inline w-4 h-4 me-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+                </svg>
+                Load More
+        </button>
     </main>
 
-    <footer class="bg-blue-600 h-10 flex items-center justify-end w-full gap-5 px-3 pr-2 md:h-14">
+    <footer class="bg-blue-600 h-14 flex items-center justify-end w-full gap-5 px-3 pr-2 md:h-14">
         <p class="font-bold text-white pr-3 pl-1 flex items-center gap-1 md:text-xl">
             <svg class="h-5 w-5 md:h-8 md: w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.08 0 7.45 3.05 7.94 7h-4.06c-.45-1.73-2.02-3-3.88-3s-3.43 1.27-3.87 3H4.06C4.55 7.05 7.92 4 12 4" opacity="0.35"/><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 2c4.08 0 7.45 3.05 7.94 7h-4.06c-.45-1.73-2.02-3-3.88-3s-3.43 1.27-3.87 3H4.06C4.55 7.05 7.92 4 12 4m2 8c0 1.1-.9 2-2 2s-2-.9-2-2s.9-2 2-2s2 .9 2 2m-2 8c-4.08 0-7.45-3.05-7.94-7h4.06c.44 1.73 2.01 3 3.87 3s3.43-1.27 3.87-3h4.06c-.47 3.95-3.84 7-7.92 7"/></svg>
             Googlemon
