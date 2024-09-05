@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Error fetching Pokemon data:', error);
-            alert(`Could not found pokemon " ${name.charAt(0).toUpperCase()+name.slice(1)} "`);
+            alert(`Could not find pokemon " ${name.charAt(0).toUpperCase()+name.slice(1)} "`);
         }
 
     }
