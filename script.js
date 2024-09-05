@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadPokemons.scrollIntoView({ behavior: 'smooth' });
             
         } else {
-            window.location.assign('/')
+            window.location.reload();
 }
     });
     
