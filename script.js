@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 limit = visiblePokemons;
                 visiblePokemons = 0;
             }
-            console.log(`limit: ${limit}`,`visible: ${visiblePokemons}`, `offset: ${offset}`);
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${visiblePokemons}`);
             const data = await response.json();
             const pokemonUrls = data.results.map(pokemon => pokemon.url);
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
             returnButton.classList.remove('hidden');
             visiblePokemons += limit;
             limit = incrementPokemonsList;
-            console.log(`limit: ${limit}`,`visible: ${visiblePokemons}`, `offset: ${offset}`);
         } catch (error) {
           console.error('Error fetching Pokémon data:', error);
         }
@@ -131,7 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
             loadPokemons.scrollIntoView({ behavior: 'smooth' });
             
         } else {
-            location.reload();}
+            window.location.reload();
+        }
     });
     
 });
