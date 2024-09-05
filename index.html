@@ -39,15 +39,15 @@
             <h1 class="font-bold text-white md:text-3xl">Googlemon</h1>
         </div>
         <section class="flex gap-5 m-3 text-sm items-center">
-            <button class="text-white text-md font-bold hover:text-gray-900 hover:bg-blue-500 sm:text-xl sm:p-2 sm:rounded-lg" onclick="location.reload();">Home</button>
-            <button class="text-white text-md font-bold hover:text-gray-900 hover:bg-blue-500 sm:text-xl sm:p-2 sm:rounded-lg">About</button>
+            <a href="/" class="text-white text-md font-bold hover:text-gray-900 hover:bg-blue-500 sm:text-xl sm:p-2 sm:rounded-lg">Home</a>
+            <a href="/" class="text-white text-md font-bold hover:text-gray-900 hover:bg-blue-500 sm:text-xl sm:p-2 sm:rounded-lg">About</a>
         </section> 
     </nav>
 
     <aside>
         <div id="drawer-navigation" class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-blue-900 flex flex-col justify-start items-start" tabindex="-1" aria-labelledby="drawer-navigation-label">
             <h1 id="drawer-navigation-label" class="text-base font-semibold text-gray-300 uppercase">Menu</h1>
-            <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="text-gray-400 bg-transparent hover:bg-gray-500 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center" >
+            <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="text-gray-400 bg-transparent hover:bg-blue-600 hover:text-gray-700 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center" >
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
             <div class="w-full h-[90%] flex flex-col justify-start items-start gap-3 py-3">
@@ -58,19 +58,19 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
                     </button>
-                    <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <div id="dropdownHover" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44 bg-blue-700">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
                         <li>
-                            <a href="" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pokemon</a>
+                            <a href="" target="_blank" class="block px-4 py-2 hover:bg-blue-600">Pokemon</a>
                         </li>
                         <li>
-                            <a href="#" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Weight</a>
+                            <a href="#" target="_blank" class="block px-4 py-2 hover:bg-blue-600">Weight</a>
                         </li>
                         <li>
-                            <a href="#" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Habitat</a>
+                            <a href="#" target="_blank" class="block px-4 py-2 hover:bg-blue-600 ">Habitat</a>
                         </li>
                         <li>
-                            <a href="https://pokeapi.co/docs/v2#abilities" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Abilities</a>
+                            <a href="https://pokeapi.co/docs/v2#abilities" target="_blank" class="block px-4 py-2 hover:bg-blue-600">Abilities</a>
                         </li>
                         </ul>
                     </div>
@@ -82,7 +82,7 @@
         <div class="flex flex-col justify-center items-center">
             <p class="bg-blue-100 rounded-lg border-2 shadow-lg border-blue-700 min-w-[300px] p-2 mb-5 text-justify text-blue-900 text-md sm:text-xl">This is Googlemon, a web aplication that uses API's to get you information about Pokemons. You can type in a name or take a look to all of them by clicking the search button. ¡Have fun learning about Pokemons!</p>
             <section class="flex items-center pb-3">
-                <input class="rounded-l-lg w-[200px] p-[7px] sm:text-xl sm:w-[350px]" type="text" placeholder="Enter a pokemon name">
+                <input class="rounded-l-lg min-w-[250px] p-[7px] sm:text-xl sm:w-[550px]" type="text" placeholder="Enter a pokemon name">
                 <button id="searchButton">
                     <svg class="w-10 h-10 bg-blue-500 p-1 rounded-r-lg sm:h-11 hover:bg-blue-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path d="M21 38c9.389 0 17-7.611 17-17S30.389 4 21 4S4 11.611 4 21s7.611 17 17 17Z"/><path stroke-linecap="round" d="M26.657 14.343A7.98 7.98 0 0 0 21 12a7.98 7.98 0 0 0-5.657 2.343m17.879 18.879l8.485 8.485"/></g></svg>
                 </button>
