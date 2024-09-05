@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         inputField.value = "";
                     });
                 newPokemonsCard.classList.add("w-[250px]","p-3", "h-auto", "mt-3","bg-white", "rounded-lg","shadow-lg","overflow-hidden", "flex", "flex-col","justify-center", "items-center","hover:bg-blue-200");
-                newPokemonsCard.innerHTML = `<img class="h-auto w-auto self-center" src="${pokemonInfo[i]['image']}" alt="pokemon image" /><div class="flex flex-col p-3 px-5 gap-2 justify-center items-center"><p class="self-center font-bold text-3xl text-blue-900 text-xl">${pokemonInfo[i]['name'].charAt(0).toUpperCase() + pokemonInfo[i]['name'].slice(1)}</p></div>`;
+                newPokemonsCard.innerHTML = `<img class="h-auto w-[250px] self-center" src="${pokemonInfo[i]['image']}" alt="pokemon image" /><div class="flex flex-col p-3 px-5 gap-2 justify-center items-center"><p class="self-center font-bold text-3xl text-blue-900 text-xl">${pokemonInfo[i]['name'].charAt(0).toUpperCase() + pokemonInfo[i]['name'].slice(1)}</p></div>`;
                 pokemonsCardsContainer.append(newPokemonsCard);
             }
             pokemonCard.classList.add('hidden');
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pokemonWeight.classList.remove('hidden');
                 pokemonHabitat.classList.remove('hidden');
                 pokemonAbilities.classList.remove('hidden');
-                pokemonImage.classList.add('bg-blue-100');
+                pokemonImage.classList.add('bg-blue-100',"h-[250px]", "w-[250px]", "sm:w-[300px]", "sm:h-[300px]");
                 pokemonCard.classList.add('shadow-lg','border','rounded-t-lg');
                 pokemonCard.classList.remove('hidden');
                 pokemonsCardsContainer.classList.add('hidden')
