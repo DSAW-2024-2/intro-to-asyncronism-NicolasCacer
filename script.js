@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const endpointPokemon = await fetch(pokemonList.results[i].url)
                 const newPokemon = await endpointPokemon.json();
-                newPokemonCard.classList.add("w-[250px]","h-auto","sm:w-[350px]","sm:h-auto","p-3","h-auto","mt-3","bg-white","rounded-lg","shadow-lg","flex","flex-col","justify-center","items-center","hover:bg-blue-200");
+                newPokemonCard.classList.add("w-[250px]","h-auto","sm:w-[235px]","sm:h-auto","p-0","h-auto","bg-white","rounded-lg","shadow-lg","flex","flex-col","justify-center","items-center","hover:bg-blue-200");
                 newPokemonCard.innerHTML = `<img class="h-auto w-[250px] self-center" src="${newPokemon.sprites['front_default']}" alt="pokemon image" /><div class="flex flex-col p-3 px-5 gap-2 justify-center items-center"><p class="self-center font-bold text-3xl text-blue-900 text-xl">${pokemonList.results[i].name.charAt(0).toUpperCase() + pokemonList.results[i].name.slice(1)}</p></div>`;
                 pokemonsCardsContainer.append(newPokemonCard);
             }
