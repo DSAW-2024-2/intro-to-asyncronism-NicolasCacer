@@ -79,10 +79,10 @@
 
     <main class="h-auto flex flex-col items-center p-[30px]">
         <div class="flex flex-col justify-center items-center">
-            <p id="introParagraph" class="bg-blue-100 rounded-lg border-2 shadow-lg border-blue-700 p-2 mb-5 text-justify text-blue-900 text-md sm:text-xl">This is Googlemon, a web aplication that uses API's to get you information about Pokemons. You can type in a name or take a look to all of them by clicking the search button. ¡Have fun learning about Pokemons!</p>
+            <p id="introParagraph" class="bg-blue-100 rounded-lg border-2 shadow-lg border-blue-700 p-2 mb-5 text-justify text-blue-900 text-md sm:text-xl">This is Googlemon, a web aplication that uses API's to get information about Pokemons. You can type in a name or take a look to all of them by clicking the search button. ¡Have fun learning about Pokemons!</p>
             <section class="flex flex-col items-center pb-3">
                 <div class="flex items-center pb-3">
-                    <input class="rounded-l-lg min-w-[250px] p-[7px] sm:text-xl sm:w-[550px]" type="text" placeholder="Enter a pokemon name">
+                    <input class="rounded-l-lg min-w-[250px] p-[7px] sm:text-xl sm:w-[550px]" type="text" placeholder="Enter a pokemon name or All">
                     <button id="searchButton">
                         <svg id="searchSvg" class="w-10 h-10 bg-blue-500 p-1 rounded-r-lg sm:h-11" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path d="M21 38c9.389 0 17-7.611 17-17S30.389 4 21 4S4 11.611 4 21s7.611 17 17 17Z"/><path stroke-linecap="round" d="M26.657 14.343A7.98 7.98 0 0 0 21 12a7.98 7.98 0 0 0-5.657 2.343m17.879 18.879l8.485 8.485"/></g></svg>
                     </button>
@@ -103,7 +103,7 @@
                                 <button id="spriteFront" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">Front</button>
                             </li>
                             <li>
-                                <button id="spriteFront" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">Back</button>
+                                <button id="spriteBack" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">Back</button>
                             </li>
                             </ul>
                         </div>
@@ -133,15 +133,12 @@
                 <p id="pokemonHabitat" class="hidden text-s sm:text-base"><strong>Habitat: </strong></p>
                 <p id="pokemonAbilities" class="hidden text-s sm:text-base"><strong>Abilities: </strong></p>
             </div>
-            <button id="returnButton" class="hidden bg-blue-500 flex justify-center items-center text-white rounded-lg w-[100px] self-center p-1 m-2 hover:bg-blue-800">
-                <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="white" d="M21 11H6.414l5.293-5.293l-1.414-1.414L2.586 12l7.707 7.707l1.414-1.414L6.414 13H21z"/></svg>
-                Return
-            </button>
+            <button id="returnButton" class="hidden bg-blue-500 flex justify-center items-center text-white rounded-lg w-[100px] self-center p-1 m-2 hover:bg-blue-800">Continue</button>
         </div>
         <div id="pokemonsCardsContainer" class="hidden inline-flex flex-wrap justify-center mt-6 gap-4 bg-blue-100 rounded-lg shadow-lg border-blue-200 border-2 p-4"></div>
         <div class="flex items-center justify-center">
             <button id="loadPokemons" class="hidden bg-blue-700 p-3 rounded-lg opacity-[0.6] hover:opacity-[1] focus:ring-2 text-white m-3">Load More</button>
-            <input class="hidden md:hidden rounded-lg text-xl" type="number" id="pokemonsIncrement" min="1" max="20" value="3">
+            <input class="hidden md:hidden rounded-lg text-xl" type="number" id="pokemonsIncrement" min="1" max="20" value="5">
         </div>
     </main>
 
