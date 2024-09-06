@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputPokemonName = document.querySelector('input[type="text"]');
     const searchButton = document.getElementById('searchButton');    
     const questionMark = document.getElementById('questionMark');
-    const returnButton = document.getElementById('returnButton');
+    const continueButton = document.getElementById('continueButton');
     const loadMorePokemons = document.getElementById('loadPokemons');
     const pokemonsIncrement = document.getElementById('pokemonsIncrement');
 
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pokemonsCardsContainer = document.getElementById('pokemonsCardsContainer');
     
 
-    let visiblePokemons = 0;
+    let previousVisiblePokemons = 0;
     let limit = parseInt(pokemonsIncrement.value,10);
     let spriteView = 'front_default';
 
@@ -21,37 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('fade-out');
     });
 
-    function applySpriteFilter(){
-        try {
-            if (pokemonsCardsContainer.classList.contains('hidden') && pokemonCard.childNodes[3].childNodes[1].id=="pokemonId"){
-                fetchPokemonsList();
-            }
-            if (pokemonsCardsContainer.classList.contains('hidden') && pokemonCard.childNodes[3].childNodes[1].id!="pokemonId"){
-                fetchPokemon(pokemonCard.childNodes[3].childNodes[3].textContent);
-            } else if (pokemonsCardsContainer.childNodes.length > 0) {
-                 visiblePokemons = parseInt(pokemonsCardsContainer.firstChild.firstChild.id, 10)-1;
-                 console.log(visiblePokemons, pokemonsCardsContainer.firstChild.firstChild.id)
-                 search(true);
-            } else {
-                search();
-                console.log('here',pokemonCard.childNodes[3].childNodes[1].id)
-            }            
-        } catch (error) {
-            console.error('Error in filter:', error);
-            alert('Something went wrong')
-        }
+    if (window.innerWidth > 425){
+        pokemonsCardsContainer.classList.remove('overflow-y-scroll');
     }
-    
-
-    document.getElementById('spriteFront').addEventListener('click',()=>{
-        spriteView = 'front_default';
-        applySpriteFilter();
-    })
-
-    document.getElementById('spriteBack').addEventListener('click',()=>{
-        spriteView = 'back_default'
-        applySpriteFilter();
-    })
 
     async function fetchPokemon(name){
         try {
@@ -85,9 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
             pokemonCard.classList.remove('hidden');
             pokemonsCardsContainer.classList.add('hidden')
             loadMorePokemons.classList.add('hidden');
-            returnButton.classList.remove('hidden');
+            continueButton.classList.remove('hidden');
             pokemonsIncrement.classList.add('md:hidden');
             introParagraph.classList.add('hidden');
+            questionMark.classList.add('md:hidden');
 
         } catch (error) {
             console.error('Error fetching Pokemon data:', error);
@@ -98,16 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchPokemonsList(offset) {
         try {
-            limit = parseInt(pokemonsIncrement.value,10);
             if (offset == true){
                 pokemonsCardsContainer.innerHTML = "";
-                limit = 10;
                 if (window.innerWidth <= 640){
                     limit = 3;
                 }
-                pokemonsIncrement.value = 10;
             }
-            const endpointPokemons = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${visiblePokemons}`); // Retrieve a list of Pokemons
+            const endpointPokemons = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${previousVisiblePokemons}`); // Retrieve a list of Pokemons
             const pokemonList = await endpointPokemons.json();
             for (let i = 0; i < pokemonList.results.length; i++){
                 const newPokemonCard = document.createElement('button');
@@ -121,14 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 pokemonsCardsContainer.append(newPokemonCard);
             }
             pokemonCard.classList.add('hidden');
+            pokemonCard.childNodes[3].childNodes[1].id = "pokemonId";
             pokemonsCardsContainer.classList.remove('hidden')
             loadMorePokemons.classList.remove('hidden');
-            returnButton.classList.remove('hidden');
+            continueButton.classList.remove('hidden');
             pokemonsIncrement.classList.remove('md:hidden');
             pokemonsIncrement.classList.add('md:block');
             introParagraph.classList.add('hidden');
-            visiblePokemons += limit;
-            console.log(`limit: ${limit}`,`offset: ${offset}`, `visible: ${visiblePokemons}`,);
+            questionMark.classList.add('md:hidden');
+            previousVisiblePokemons += limit;
             
         } catch (error) {
             console.error('Error fetching Pokémon data:', error);
@@ -139,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     inputPokemonName.addEventListener('keydown', function(event){
         if(event.key==="Enter"){
             search();
+            inputPokemonName.value = "";
         }
     });
 
@@ -165,36 +137,64 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     function search(offset){
-        if (validateIncrement(parseInt(pokemonsIncrement.value, 10))==true){
+        if (offset){
+            fetchPokemonsList(offset);
+        }
+        else if (validateIncrement(parseInt(pokemonsIncrement.value, 10))==true){
             if (inputPokemonName.value == "" || inputPokemonName.value.toLowerCase() == "all"){
                 pokemonsCardsContainer.innerHTML = "";
-                fetchPokemonsList(offset);
+                previousVisiblePokemons = 0;
+                fetchPokemonsList();                
                 return
             } else if (validateInputName(inputPokemonName.value.toLowerCase())){
                 fetchPokemon(inputPokemonName.value.toLowerCase()),{trigger: 'hover'}
                 return
             }
-            alert('Please type a pokemon name. (e.g.: Pikachu)')
+            alert('Please type a known pokemon name. (e.g.: Pikachu)')
         }
         else {
             alert('Choose a number between 1 and 20')
         }
-
     }
 
-    searchButton.addEventListener('click', () => {if (pokemonsCardsContainer.classList.contains('hidden') || inputPokemonName.value != ""){search()}});
+    function applySpriteFilter(){
+        try {
+            if (pokemonsCardsContainer.classList.contains('hidden') && pokemonCard.childNodes[3].childNodes[1].id=="pokemonId"){
+                fetchPokemonsList();
+                console.log('inicio');
+            }
+            else if (!pokemonCard.classList.contains('hidden')){
+                fetchPokemon(pokemonCard.childNodes[3].childNodes[3].textContent);
+                console.log('solo un poke');
+            } else if (pokemonCard.classList.contains('hidden') && pokemonsCardsContainer.childNodes.length > 0) {
+                limit = parseInt(pokemonsCardsContainer.lastChild.firstChild.id,10)-(parseInt(pokemonsCardsContainer.firstChild.firstChild.id, 10)-1);
+                previousVisiblePokemons = parseInt(pokemonsCardsContainer.firstChild.firstChild.id, 10)-1;
+                console.log('varios pokes y ya buscado',`limite: ${limit}`,`previos: ${previousVisiblePokemons}`);
+                search(true);
+                
+            } else {
+                search();
+                console.log('nada');
+            }            
+        } catch (error) {
+            console.error('Error in filter:', error);
+            alert('Something went wrong')
+        }
+    }
+
+    document.getElementById('spriteFront').addEventListener('click',()=>{
+        spriteView = 'front_default';
+        applySpriteFilter();
+    })
+
+    document.getElementById('spriteBack').addEventListener('click',()=>{
+        spriteView = 'back_default'
+        applySpriteFilter();
+    })
+
+    searchButton.addEventListener('click', () => {if (pokemonsCardsContainer.classList.contains('hidden') || inputPokemonName.value != ""){search(); inputPokemonName.value = "";}});
 
     questionMark.addEventListener('click', () => {trigger: 'hover'});
-
-
-    loadMorePokemons.addEventListener('click',()=>{
-        if (validateIncrement(parseInt(pokemonsIncrement.value, 10))==true){
-            fetchPokemonsList();
-            return
-        }
-        alert('Choose a number between 1 and 20')
-    }
-    );
 
     pokemonsIncrement.addEventListener('input',() => {
          if (validateIncrement(parseInt(pokemonsIncrement.value, 10))){
@@ -216,15 +216,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 top: document.body.scrollHeight - window.innerHeight + 500,
                 behavior: 'smooth'
             });
-        }, 500);
+        }, 400);
     }
+
+    loadMorePokemons.addEventListener('click',()=>{
+        if (validateIncrement(parseInt(pokemonsIncrement.value, 10))==true){
+            limit = parseInt(pokemonsIncrement.value,10);
+            fetchPokemonsList();
+            scrollDown();
+            return
+        }
+        alert('Choose a number between 1 and 20')
+    }
+    );
     
-    returnButton.addEventListener('click', () => {
-        pokemonsCardsContainer.innerHTML = "";
+    continueButton.addEventListener('click', () => {
         inputPokemonName.value = "";
-        visiblePokemons = pokemonCard.childNodes[3].childNodes[1].id-1;
+        previousVisiblePokemons = pokemonCard.childNodes[3].childNodes[1].id-1;
+        limit = pokemonsCardsContainer.childNodes.length;
+        //console.log(pokemonsCardsContainer.childNodes.length,parseInt(pokemonsIncrement.value, 10),previousVisiblePokemons)
+        pokemonsCardsContainer.innerHTML = "";
         fetchPokemonsList(true);
         scrollDown();
-    });
-    
+    });    
 });
