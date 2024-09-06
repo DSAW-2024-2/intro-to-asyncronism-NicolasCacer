@@ -93,17 +93,17 @@
                     </div>
                 </div>
                 <section id="filters" class="flex gap-3">
-                    <button id="pokemonFlip" data-dropdown-toggle="flipOptions" data-dropdown-trigger="hover" class="bg-blue-900 hover:bg-blue-600 text-sm sm:text-lg flex justify-start items-center rounded-full px-3 py-1 text-white font-bold" type="button">Sprites<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <button id="pokemonFlip" data-dropdown-toggle="flipOptions" data-dropdown-trigger="hover" class="text-sm sm:text-lg flex justify-start bg-blue-900 hover:bg-blue-600 justify-start items-center rounded-full px-3 py-1 text-white font-bold" type="button">Sprites<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                         </svg>
                         </button>
-                        <div id="flipOptions" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-auto bg-blue-900">
+                        <div id="flipOptions" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-auto bg-blue-900 max-h-[200px] overflow-y-auto">
                             <ul class="py-2 text-sm " aria-labelledby="pokemonFlip">
                             <li>
-                                <a href="" target="_blank" class="block px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg">Front</a>
+                                <button id="spriteFront" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">Front</button>
                             </li>
                             <li>
-                                <a href="#" target="_blank" class="block px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg">Back</a>
+                                <button id="spriteFront" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">Back</button>
                             </li>
                             </ul>
                         </div>
@@ -111,13 +111,13 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                         </svg>
                         </button>
-                        <div id="statsOptions" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-auto bg-blue-900">
+                        <div id="statsOptions" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-auto bg-blue-900 max-h-[200px] overflow-y-auto">
                             <ul class="py-2 text-sm" aria-labelledby="pokemonStats">
                             <li>
-                                <a href="" target="_blank" class="block px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg">Pokemon</a>
+                                <button id="statSpeed" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">Speed</button>
                             </li>
                             <li>
-                                <a href="#" target="_blank" class="block px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg">Weight</a>
+                                <button id="statStrenght" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">Strenght</button>
                             </li>
                             </ul>
                         </div>
