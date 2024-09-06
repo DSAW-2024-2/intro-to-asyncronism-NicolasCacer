@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pokemonCard = document.getElementById('pokemonCard');
     const pokemonsCardsContainer = document.getElementById('pokemonsCardsContainer');
+    const pokemonFilters = document.getElementById('filters');
 
     let visiblePokemons = 0;
     let limit = parseInt(pokemonsIncrement.value,10);
@@ -36,11 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const habitat = pokemonSpecieData.habitat ? pokemonSpecieData.habitat.name : 'Unknown';
 
             pokemonCard.childNodes[3].childNodes[1].id = `${data.id}`;
-            pokemonImage.src = data.sprites['front_default'];
+            pokemonImage.src = data.sprites['back_default'];
             pokemonName.textContent = data.name.charAt(0).toUpperCase() + data.name.slice(1);
-            pokemonWeight.innerHTML = `<strong>Weight: </strong> ${data.weight/10} kg`;
-            pokemonHabitat.innerHTML = `<strong>Habitat: </strong> ${habitat}`;
-            pokemonAbilities.innerHTML = `<strong>Abilities: </strong>: ${data.abilities.map(ability => ability.ability.name).join(', ')}`;
+            pokemonWeight.innerHTML = `<strong>Weight: </strong>${data.weight/10} kg`;
+            pokemonHabitat.innerHTML = `<strong>Habitat: </strong>${habitat}`;
+            pokemonAbilities.innerHTML = `<strong>Abilities: </strong>${data.abilities.map(ability => ability.ability.name).join(', ')}`;
 
             pokemonName.classList.remove('hidden');
             pokemonWeight.classList.remove('hidden');
@@ -123,11 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (regex.test(inputPokemonName.value) || inputPokemonName.value=="") {
             inputPokemonName.classList.remove('bg-red-100','ring-2', 'ring-red-500','opacity-[0.5]');
             searchButton.disabled = false
-            searchSvg.classList.remove('opacity-[0.5]')
+            searchSvg.classList.remove('opacity-[0.5]','cursor-not-allowed')
         } else {
             inputPokemonName.classList.add('bg-red-100','ring-1', 'ring-red-500');
             searchButton.disabled = true;
-            searchSvg.classList.add('opacity-[0.5]')
+            searchSvg.classList.add('opacity-[0.5]','cursor-not-allowed')
         }        
     })
 
@@ -162,12 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
     pokemonsIncrement.addEventListener('input',() => {
          if (validateIncrement(parseInt(pokemonsIncrement.value, 10))){
             pokemonsIncrement.classList.remove('bg-red-100','ring-2', 'ring-red-500');
-            loadMorePokemons.classList.remove('hover:opacity-[0.6]');
+            loadMorePokemons.classList.remove('hover:opacity-[0.6]','cursor-not-allowed');
             loadMorePokemons.disabled = false;
          }
          else{
             pokemonsIncrement.classList.add('bg-red-100','ring-2', 'ring-red-500');
-            loadMorePokemons.classList.add('hover:opacity-[0.6]')
+            loadMorePokemons.classList.add('hover:opacity-[0.6]','cursor-not-allowed')
             loadMorePokemons.disabled = true;
             alert('Choose a number between 1 and 20')
          }
