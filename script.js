@@ -21,30 +21,41 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('fade-out');
     });
 
+    function applySpriteFilter(){
+        try {
+            if (pokemonsCardsContainer.classList.contains('hidden') && pokemonCard.childNodes[3].childNodes[1].id=="pokemonId"){
+                fetchPokemonsList();
+            }
+            if (pokemonsCardsContainer.classList.contains('hidden') && pokemonCard.childNodes[3].childNodes[1].id!="pokemonId"){
+                fetchPokemon(pokemonCard.childNodes[3].childNodes[3].textContent);
+            } else if (pokemonsCardsContainer.childNodes.length > 0) {
+                 visiblePokemons = parseInt(pokemonsCardsContainer.firstChild.firstChild.id, 10)-1;
+                 console.log(visiblePokemons, pokemonsCardsContainer.firstChild.firstChild.id)
+                 search(true);
+            } else {
+                search();
+                console.log('here',pokemonCard.childNodes[3].childNodes[1].id)
+            }            
+        } catch (error) {
+            console.error('Error in filter:', error);
+            alert('Something went wrong')
+        }
+    }
+    
+
     document.getElementById('spriteFront').addEventListener('click',()=>{
         spriteView = 'front_default';
-        if ((inputPokemonName.value == "" && pokemonsCardsContainer.childNodes.length > 0 && !pokemonsCardsContainer.classList.contains('hidden') )|| inputPokemonName.value.toLowerCase() == "all"){
-            try {
-                let firstVisiblePokemonId = parseInt(pokemonsCardsContainer.firstChild.firstChild.id);
-                visiblePokemons = firstVisiblePokemonId-1
-                search(true);
-            } catch (error) {
-                console.error('Error in filter:', error);
-                alert('Something went wrong')
-            }
-        } else {
-            search();
-        }
+        applySpriteFilter();
     })
 
     document.getElementById('spriteBack').addEventListener('click',()=>{
         spriteView = 'back_default'
-        search();
+        applySpriteFilter();
     })
 
     async function fetchPokemon(name){
         try {
-            const endpointPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`); // Retrieved from Pokemon endpoint: name, weight, sprite and abilities.
+            const endpointPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}/`); // Retrieved from Pokemon endpoint: name, weight, sprite and abilities.
             let data = await endpointPokemon.json();
 
             const pokemonCard = document.getElementById('pokemonCard');
@@ -157,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (validateIncrement(parseInt(pokemonsIncrement.value, 10))==true){
             if (inputPokemonName.value == "" || inputPokemonName.value.toLowerCase() == "all"){
                 pokemonsCardsContainer.innerHTML = "";
-                visiblePokemons = 0;
                 fetchPokemonsList(offset);
                 return
             } else if (validateInputName(inputPokemonName.value.toLowerCase())){
@@ -172,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    searchButton.addEventListener('click', () => {search()});
+    searchButton.addEventListener('click', () => {if (pokemonsCardsContainer.classList.contains('hidden') || inputPokemonName.value != ""){search()}});
 
     questionMark.addEventListener('click', () => {trigger: 'hover'});
 
@@ -211,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     returnButton.addEventListener('click', () => {
         pokemonsCardsContainer.innerHTML = "";
+        inputPokemonName.value = "";
         visiblePokemons = pokemonCard.childNodes[3].childNodes[1].id-1;
         fetchPokemonsList(true);
         scrollDown();
