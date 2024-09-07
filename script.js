@@ -25,6 +25,48 @@ document.addEventListener('DOMContentLoaded', () => {
         pokemonsCardsContainer.classList.remove('overflow-y-scroll');
     }
 
+    async function buttonsSprites(){
+        try {
+            const response = await fetch('https://pokeapi.co/api/v2/pokemon/1/');
+            const data = await response.json();
+            for (let i = 0; i <= 6; i+=2){
+                const newViewButton = document.createElement('li');
+                let viewName = (Object.keys(data.sprites)[i].charAt(0).toUpperCase()+Object.keys(data.sprites)[i].slice(1)).replace(/_/g, ' ')
+                newViewButton.innerHTML = `<button id="${viewName}" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">${viewName}</button>`
+                document.getElementById('viewSpriteList').append(newViewButton);
+                document.getElementById(viewName).addEventListener('click',()=>{
+                    spriteView = Object.keys(data.sprites)[i];
+                    applySpriteFilter();
+                })
+            }
+        } catch (error) {
+            console.error('fetch error:',error);
+        }
+    }
+
+    buttonsSprites();
+
+    async function buttonsGrowth(){
+        try {
+            const response = await fetch('https://pokeapi.co/api/v2/growth-rate/');
+            const data = await response.json();
+            console.log(data)
+            for (let i = 0; i < data.results.length; i++){
+                const newGrowthButton = document.createElement('li');
+                let growthName = (data.results[i].name.charAt(0).toUpperCase()+data.results[i].name.slice(1)).replace(/-/g, ' ')
+                newGrowthButton.innerHTML = `<button id="${data.results[i].name}" class="px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">${growthName}</button>`
+                document.getElementById('growthList').append(newGrowthButton);
+                newGrowthButton.addEventListener('click',()=>{
+                    console.log(growthName);
+                })
+            }
+        } catch (error) {
+            console.error('fetch error:',error);
+        }
+    }
+
+    buttonsGrowth();
+
     async function fetchPokemon(name){
         try {
             const endpointPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}/`); // Retrieved from Pokemon endpoint: name, weight, sprite and abilities.
@@ -161,36 +203,22 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             if (pokemonsCardsContainer.classList.contains('hidden') && pokemonCard.childNodes[3].childNodes[1].id=="pokemonId"){
                 fetchPokemonsList();
-                console.log('inicio');
             }
             else if (!pokemonCard.classList.contains('hidden')){
                 fetchPokemon(pokemonCard.childNodes[3].childNodes[3].textContent);
-                console.log('solo un poke');
             } else if (pokemonCard.classList.contains('hidden') && pokemonsCardsContainer.childNodes.length > 0) {
                 limit = parseInt(pokemonsCardsContainer.lastChild.firstChild.id,10)-(parseInt(pokemonsCardsContainer.firstChild.firstChild.id, 10)-1);
                 previousVisiblePokemons = parseInt(pokemonsCardsContainer.firstChild.firstChild.id, 10)-1;
-                console.log('varios pokes y ya buscado',`limite: ${limit}`,`previos: ${previousVisiblePokemons}`);
                 search(true);
                 
             } else {
                 search();
-                console.log('nada');
             }            
         } catch (error) {
             console.error('Error in filter:', error);
             alert('Something went wrong')
         }
     }
-
-    document.getElementById('spriteFront').addEventListener('click',()=>{
-        spriteView = 'front_default';
-        applySpriteFilter();
-    })
-
-    document.getElementById('spriteBack').addEventListener('click',()=>{
-        spriteView = 'back_default'
-        applySpriteFilter();
-    })
 
     searchButton.addEventListener('click', () => {if (pokemonsCardsContainer.classList.contains('hidden') || inputPokemonName.value != ""){search(); inputPokemonName.value = "";}});
 
@@ -234,7 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
         inputPokemonName.value = "";
         previousVisiblePokemons = pokemonCard.childNodes[3].childNodes[1].id-1;
         limit = pokemonsCardsContainer.childNodes.length;
-        //console.log(pokemonsCardsContainer.childNodes.length,parseInt(pokemonsIncrement.value, 10),previousVisiblePokemons)
         pokemonsCardsContainer.innerHTML = "";
         fetchPokemonsList(true);
         scrollDown();
