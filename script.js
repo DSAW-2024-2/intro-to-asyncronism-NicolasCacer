@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 newGrowthButton.addEventListener('click',()=>{
                     growthRate = data.results[i].name;
                     document.getElementById('pokemonGrowth').innerHTML = `${growthName}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>`;
+                    pokemonsCardsContainer.innerHTML = "";
                     fetchGrowthPokemonsList(data.results[i].name);
                 })
             }
@@ -66,55 +67,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
     buttonsGrowth();
 
-    async function fetchGrowthPokemonsList(growthRate){
-        if (!pokemonCard.classList.contains('hidden') && previousVisiblePokemons==0){
-            try {
-                const response = await fetch(`https://pokeapi.co/api/v2/growth-rate/${growthRate}/`);
-                const data = await response.json();
-                const endpointPokemon = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1302&offset=0');
-                const allPokemons = await endpointPokemon.json();
-                let allPokemonsList = [];
-                for (let i = 0; i < allPokemons.results.length; i++){
-                    allPokemonsList.push(allPokemons.results[i].name)
-                }
-                const pokemonWithGrowth = [];
-                for (let i = 0; i<data.pokemon_species.length;i++){
-                    pokemonWithGrowth.push(data.pokemon_species[i].name)
-                    
-                }
-                let commonPokemons = [];
-                for (let i = 0; i<pokemonWithGrowth.length; i++){
-                    if (allPokemonsList.includes(pokemonWithGrowth[i])){
-                        commonPokemons.push(pokemonWithGrowth[i])
-                    }
-                }
-                commonPokemons = commonPokemons.slice(previousVisiblePokemons, previousVisiblePokemons+parseInt(pokemonsIncrement.value,10))
-                console.log(commonPokemons.slice(previousVisiblePokemons, previousVisiblePokemons+parseInt(pokemonsIncrement.value,10)).length)
-                for (let i = 0; i < commonPokemons.length; i++){
-                    const newPokemonCard = document.createElement('button');
-                    newPokemonCard.addEventListener('click', function(){
-                        fetchPokemon(commonPokemons[i].toLowerCase());
-                    });
-                    const endpointPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${commonPokemons[i]}/`);
-                    const newPokemon = await endpointPokemon.json();
-                    newPokemonCard.classList.add("w-[250px]","h-auto","sm:w-[235px]","sm:h-auto","p-0","h-auto","bg-white","rounded-lg","shadow-lg","flex","flex-col","justify-center","items-center","hover:bg-blue-200");
-                    newPokemonCard.innerHTML = `<img id="${newPokemon.id}" class="h-auto w-[250px] self-center" src="${newPokemon.sprites[spriteView]}" alt="pokemon image" /><div class="flex flex-col p-3 px-5 gap-2 justify-center items-center"><p class="self-center font-bold text-3xl text-blue-900 text-xl">${commonPokemons[i].charAt(0).toUpperCase() + commonPokemons[i].slice(1)}</p></div>`;
-                    pokemonsCardsContainer.append(newPokemonCard);
-                }
-                pokemonCard.classList.add('hidden');
-                pokemonCard.childNodes[3].childNodes[1].id = "pokemonId";
-                pokemonsCardsContainer.classList.remove('hidden')
-                loadMorePokemons.classList.remove('hidden');
-                continueButton.classList.remove('hidden');
-                pokemonsIncrement.classList.remove('md:hidden');
-                pokemonsIncrement.classList.add('md:block');
-                introParagraph.classList.add('hidden');
-                questionMark.classList.add('md:hidden');
-            } catch (error) {
-                console.error('fetch error:',error);
+    async function fetchCommonPokemons(growthRate) {
+        try {
+            const response = await fetch(`https://pokeapi.co/api/v2/growth-rate/${growthRate}/`);
+            const data = await response.json();
+            const endpointPokemon = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1302&offset=0');
+            const allPokemons = await endpointPokemon.json();
+            let allPokemonsList = [];
+            for (let i = 0; i < allPokemons.results.length; i++){
+                allPokemonsList.push(allPokemons.results[i].name)
             }
+            const pokemonWithGrowth = [];
+            for (let i = 0; i<data.pokemon_species.length;i++){
+                pokemonWithGrowth.push(data.pokemon_species[i].name)
+                
+            }
+            let commonPokemons = [];
+            for (let i = 0; i<pokemonWithGrowth.length; i++){
+                if (allPokemonsList.includes(pokemonWithGrowth[i])){
+                    commonPokemons.push(pokemonWithGrowth[i])
+                }
+            }
+            return commonPokemons;
+        }catch (error){
+            console.error('Fetch error:', error)
         }
-        
+    }
+
+    async function fetchGrowthPokemonsList(growthRate){
+        try{
+            let commonPokemonsSlice = await fetchCommonPokemons(growthRate);
+            console.log(commonPokemonsSlice)
+            commonPokemonsSlice = commonPokemonsSlice.slice(previousVisiblePokemons, previousVisiblePokemons+parseInt(pokemonsIncrement.value,10));
+            if (commonPokemonsSlice.length == 0){
+                alert('There are no more Pokemons')
+                return
+            }
+            for (let i = 0; i < commonPokemonsSlice.length; i++){
+                const newPokemonCard = document.createElement('button');
+                newPokemonCard.addEventListener('click', function(){
+                    pokemonsCardsContainer.innerHTML = "";
+                    fetchPokemon(commonPokemonsSlice[i].toLowerCase());
+                    
+                });
+                const endpointPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${commonPokemonsSlice[i]}/`);
+                const newPokemon = await endpointPokemon.json();
+                newPokemonCard.classList.add("w-[250px]","h-auto","sm:w-[235px]","sm:h-auto","p-0","h-auto","bg-white","rounded-lg","shadow-lg","flex","flex-col","justify-center","items-center","hover:bg-blue-200");
+                newPokemonCard.innerHTML = `<img id="${newPokemon.id}" class="h-auto w-[250px] self-center" src="${newPokemon.sprites[spriteView]}" alt="pokemon image" /><div class="flex flex-col p-3 px-5 gap-2 justify-center items-center"><p class="self-center font-bold text-3xl text-blue-900 text-xl">${commonPokemonsSlice[i].charAt(0).toUpperCase() + commonPokemonsSlice[i].slice(1)}</p></div>`;
+                pokemonsCardsContainer.append(newPokemonCard);
+            }
+            pokemonCard.classList.add('hidden');
+            pokemonCard.childNodes[3].childNodes[1].id = "pokemonId";
+            pokemonsCardsContainer.classList.remove('hidden')
+            loadMorePokemons.classList.remove('hidden');
+            continueButton.classList.remove('hidden');
+            pokemonsIncrement.classList.remove('md:hidden');
+            pokemonsIncrement.classList.add('md:block');
+            introParagraph.classList.add('hidden');
+            questionMark.classList.add('md:hidden');
+            previousVisiblePokemons+=parseInt(pokemonsIncrement.value,10)
+        } catch (error) {
+            console.error('fetch error:',error);
+        }        
     }
 
     async function fetchPokemon(name){
@@ -153,6 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
             pokemonsIncrement.classList.add('md:hidden');
             introParagraph.classList.add('hidden');
             questionMark.classList.add('md:hidden');
+            document.getElementById('pokemonGrowth').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
         } catch (error) {
             console.error('Error fetching Pokemon data:', error);
@@ -299,17 +315,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadMorePokemons.addEventListener('click',()=>{
         if (validateIncrement(parseInt(pokemonsIncrement.value, 10))==true){
-            limit = parseInt(pokemonsIncrement.value,10);
-            fetchPokemonsList();
-            scrollDown();
-            return
+            if (document.getElementById('pokemonGrowth').textContent.includes('Growth Rate')){
+                limit = parseInt(pokemonsIncrement.value,10);
+                fetchPokemonsList();
+                scrollDown();
+            } else{
+                fetchGrowthPokemonsList(growthRate);
+                
+            }
+        } else{
+            alert('Choose a number between 1 and 20')
         }
-        alert('Choose a number between 1 and 20')
     }
     );
     
     continueButton.addEventListener('click', () => {
         inputPokemonName.value = "";
+        document.getElementById('pokemonGrowth').classList.remove('hidden')
         previousVisiblePokemons = pokemonCard.childNodes[3].childNodes[1].id-1;
         limit = pokemonsCardsContainer.childNodes.length;
         pokemonsCardsContainer.innerHTML = "";
