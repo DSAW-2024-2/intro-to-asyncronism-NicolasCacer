@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let previousVisiblePokemons = 0;
     let limit = parseInt(pokemonsIncrement.value,10);
     let spriteView = 'front_default';
-    let growthRate = '';
+    let growthRate = 'All';
 
     window.addEventListener('beforeunload', () => {
         document.body.classList.remove('fade-in');
@@ -58,8 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('pokemonGrowth').innerHTML = `${growthName}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>`;
                     pokemonsCardsContainer.innerHTML = "";
                     fetchGrowthPokemonsList(data.results[i].name);
+                    document.getElementById('growthAll').classList.remove('hidden');
                 })
             }
+            document.getElementById('growthAll').addEventListener('click',()=>{
+                growthRate = 'All';
+                pokemonsCardsContainer.innerHTML = "";
+                previousVisiblePokemons = 0;
+                document.getElementById('pokemonGrowth').innerHTML = `${growthRate}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>`;
+                document.getElementById('growthAll').classList.add('hidden');
+                fetchPokemonsList();
+            });
         } catch (error) {
             console.error('fetch error:',error);
         }
