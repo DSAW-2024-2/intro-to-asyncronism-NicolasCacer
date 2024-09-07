@@ -107,6 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchGrowthPokemonsList(growthRate){
         try{
+            if (growthRate == "All"){
+                fetchPokemonList();
+                return
+            }
             let commonPokemonsSlice = await fetchCommonPokemons(growthRate);
             console.log(commonPokemonsSlice)
             commonPokemonsSlice = commonPokemonsSlice.slice(previousVisiblePokemons, previousVisiblePokemons+parseInt(pokemonsIncrement.value,10));
