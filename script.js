@@ -107,12 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchGrowthPokemonsList(growthRate){
         try{
-            if (growthRate == "All"){
-                fetchPokemonList();
-                return
-            }
             let commonPokemonsSlice = await fetchCommonPokemons(growthRate);
-            console.log(commonPokemonsSlice)
             commonPokemonsSlice = commonPokemonsSlice.slice(previousVisiblePokemons, previousVisiblePokemons+parseInt(pokemonsIncrement.value,10));
             if (commonPokemonsSlice.length == 0){
                 alert('There are no more Pokemons')
@@ -287,13 +282,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             else if (!pokemonCard.classList.contains('hidden')){
                 fetchPokemon(pokemonCard.childNodes[3].childNodes[3].textContent);
-            } else if (pokemonCard.classList.contains('hidden') && pokemonsCardsContainer.childNodes.length > 0) {
+            } else if (pokemonCard.classList.contains('hidden') && pokemonsCardsContainer.childNodes.length > 0 && growthRate=="Growth Rate") {
                 limit = parseInt(pokemonsCardsContainer.lastChild.firstChild.id,10)-(parseInt(pokemonsCardsContainer.firstChild.firstChild.id, 10)-1);
                 previousVisiblePokemons = parseInt(pokemonsCardsContainer.firstChild.firstChild.id, 10)-1;
-                search(true);
-                
+                search(true);                
             } else {
-                search();
+                console.log(limit, previousVisiblePokemons);
+                
             }            
         } catch (error) {
             console.error('Error in filter:', error);
