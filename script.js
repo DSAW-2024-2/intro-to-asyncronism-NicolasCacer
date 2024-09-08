@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
             }
         } catch (error) {
-            console.error('fetch error:',error);
+            console.error('button sprite error:',error);
         }
     }
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function buttonsGrowth(){
         try {
-            const response = await fetch('https://pokeapi.co/api/v2/growth-rate/');
+            const response = await fetch('https://pokeapi.co/api/v2/growth-rate//');
             const data = await response.json();
             for (let i = 0; i < data.results.length; i++){
                 let growthName = (data.results[i].name.charAt(0).toUpperCase()+data.results[i].name.slice(1)).replace(/-/g, ' ');
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 applyGrowthFilter();
             });
         } catch (error) {
-            console.error('fetch error:',error);
+            console.error('button Growth error:',error);
         }
     }
 
@@ -77,17 +77,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function filterPokemonsByGrowth(growthRate) {
         try {
-            if (growthRate == 'All'){
-                growthRate == "";
-            }
-            const response = await fetch(`https://pokeapi.co/api/v2/growth-rate/${growthRate}/`);
-            const data = await response.json();
             const endpointPokemon = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1302&offset=0');
             const allPokemons = await endpointPokemon.json();
             let allPokemonsList = [];
             for (let i = 0; i < allPokemons.results.length; i++){
                 allPokemonsList.push(allPokemons.results[i].name)
             }
+            if (growthRate == 'All') {
+                pokemonsList = allPokemonsList;
+                return pokemonsList;
+            }
+            const response = await fetch(`https://pokeapi.co/api/v2/growth-rate/${growthRate}/`);
+            const data = await response.json();
             const pokemonsWithGrowth = [];
             for (let i = 0; i < data.pokemon_species.length; i++){
                 pokemonsWithGrowth.push(data.pokemon_species[i].name)
@@ -101,26 +102,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return pokemonsList;
         }catch (error){
-            console.error('Fetch error:', error)
+            console.error('filter pokemons error:', error)
         }
     }
     
     async function applySpriteFilter(){
         try{
-        if (pokemonsCardsContainer.childNodes.length == 0 && pokemonCard.childNodes[3].childNodes[1].id != "pokemonId"){
-            fetchPokemon(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase());
-        }
-        else if (pokemonsCardsContainer.childNodes.length > 0){
-            fetchPokemons(offset);
-        }
+            if (pokemonsCardsContainer.childNodes.length == 0 && pokemonCard.childNodes[3].childNodes[1].id != "pokemonId"){
+                fetchPokemon(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase());
+            }
+            else if (pokemonsCardsContainer.childNodes.length > 0){
+                fetchPokemons(offset);
+            }
         } catch(error){
-            console.error('An error ocurred:', error);
+            console.error('Apply sprite filter error:', error);
         }
     }
 
     async function applyGrowthFilter() {
-        pokemonsList = await filterPokemonsByGrowth(growthRate);
-        fetchPokemons(0);        
+        offset = 0;
+        pokemonsCardsContainer.innerHTML = "";
+        await fetchPokemons(offset);        
     }
 
     async function fetchPokemon(name){
@@ -135,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const pokemonHabitat = document.getElementById('pokemonHabitat');
             const pokemonAbilities = document.getElementById('pokemonAbilities');
 
-            const endpointSpecies = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${data.id}/`); //Retrieve the habitat for the given the pokemon.
+            const endpointSpecies = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name.toLowerCase()}/`); //Retrieve the habitat for the given the pokemon.
             const pokemonSpecieData = await endpointSpecies.json();
             const habitat = pokemonSpecieData.habitat ? pokemonSpecieData.habitat.name : 'Unknown';
 
@@ -164,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         } catch (error) {
-            console.error('Error fetching Pokemon data:', error);
+            console.error('Error fetching Pokemon:', error);
             alert(`Could not find pokemon " ${name} "`);
         }
 
@@ -173,12 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchPokemons(offset){
         try {
             pokemonsList = await filterPokemonsByGrowth(growthRate);
-            pokemonsCardsContainer.innerHTML = "";
             pokemonsIncrement = parseInt(increment.value,10);
             if (window.innerWidth <= 640){
                 pokemonsIncrement = 3;
             }
-            for (let i = 0; i < pokemonsList.length; i++){
+            for (let i = offset; i < (offset+pokemonsIncrement); i++){
                 const newPokemonCard = document.createElement('button');
                 newPokemonCard.addEventListener('click', function(){
                     fetchPokemon(pokemonsList[i]);
@@ -193,15 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
             pokemonCard.childNodes[3].childNodes[1].id = "pokemonId";
             pokemonsCardsContainer.classList.remove('hidden')
             loadMorePokemons.classList.remove('hidden');
-            continueButton.classList.remove('hidden');
+            continueButton.classList.add('hidden');
             increment.classList.remove('md:hidden');
             increment.classList.add('md:block');
             introParagraph.classList.add('hidden');
             questionMark.classList.add('md:hidden');
             offset += pokemonsIncrement;
+            console.log(offset,pokemonsIncrement)
             
         } catch (error) {
-            console.error('Error fetching Pokémon data:', error);
+            console.error('Error fetching Pokemons:', error);
             alert('Something went wrong');
         }
     }
@@ -218,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     inputPokemonName.addEventListener('input',() => {
-        const regex = /^[A-Za-z]+$/; // Regular expression to match only alphabetic characters (both uppercase and lowercase)
+        const regex = /^[A-Za-z-]*$/; // Regular expression to match only alphabetic characters (both uppercase and lowercase) and hyphens
         const searchSvg = document.getElementById('searchSvg');
         if (regex.test(inputPokemonName.value) || inputPokemonName.value=="") {
             inputPokemonName.classList.remove('bg-red-100','ring-2', 'ring-red-500','opacity-[0.5]');
@@ -280,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadMorePokemons.addEventListener('click',()=>{
         if (validateIncrement(parseInt(increment.value, 10))){
-            search(pokemonsCardsContainer.childNodes.length);
+            fetchPokemons(offset)
         } else{
             alert('Choose a number between 1 and 20')
         }
