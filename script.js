@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     applySpriteFilter();
                 })
             }
+            document.getElementById(spriteView).classList.add('hidden');
         } catch (error) {
             console.error('button sprite error:',error);
         }
@@ -120,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pokemonsCardsContainer.innerHTML = "";
                 await fetchPokemons(offset);
                 increment.value = actualIncrement;
-            } else {
+            } else if (pokemonsCardsContainer.childNodes.length != 0 && pokemonsCardsContainer.classList.contains('hidden')) {
                 fetchPokemon(pokemonCard.childNodes[3].childNodes[1].id)
             }
         } catch(error){
@@ -187,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pokemonsList = await filterPokemonsByGrowth(growthRate);
             pokemonsIncrement = parseInt(increment.value,10);
             if (window.innerWidth <= 640){
-                pokemonsIncrement = 5;
+                increment.value = 3;
             }
             for (let i = offsetParam; i < (offsetParam+pokemonsIncrement); i++){
                 const newPokemonCard = document.createElement('button');
