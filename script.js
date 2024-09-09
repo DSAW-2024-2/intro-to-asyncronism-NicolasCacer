@@ -118,11 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 let actualIncrement = parseInt(increment.value, 10);
                 increment.value = pokemonsCardsContainer.childNodes.length;
                 pokemonsCardsContainer.innerHTML = "";
-                console.log(offset, actualIncrement)
                 await fetchPokemons(offset);
                 increment.value = actualIncrement;
             } else {
-                console.log(pokemonCard.childNodes[3].childNodes[1].id)
                 fetchPokemon(pokemonCard.childNodes[3].childNodes[1].id)
             }
         } catch(error){
