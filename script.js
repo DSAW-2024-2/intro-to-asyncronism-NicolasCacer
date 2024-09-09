@@ -174,21 +174,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    async function fetchPokemons(offset){
+    async function fetchPokemons(offsetParam){
         try {
             pokemonsList = await filterPokemonsByGrowth(growthRate);
             pokemonsIncrement = parseInt(increment.value,10);
             if (window.innerWidth <= 640){
                 pokemonsIncrement = 5;
             }
-            if (pokemonsIncrement > (pokemonsList.length-offset)){
-                pokemonsIncrement = pokemonsList.length-offset
-                if (pokemonsIncrement < 5){
-                    offset = pokemonsList.length-5;
-                    pokemonsIncrement = 5;
-                }
-            }
-            for (let i = offset; i < (offset+pokemonsIncrement); i++){
+            for (let i = offsetParam; i < (offsetParam+pokemonsIncrement); i++){
                 const newPokemonCard = document.createElement('button');
                 newPokemonCard.addEventListener('click', function(){
                     fetchPokemon(pokemonsList[i]);
@@ -208,7 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
             increment.classList.add('md:block');
             introParagraph.classList.add('hidden');
             questionMark.classList.add('md:hidden');
-            offset += pokemonsIncrement;
+            offsetParam += pokemonsIncrement
+            offset = offsetParam;
             console.log(offset,pokemonsIncrement)
             
         } catch (error) {
@@ -242,11 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }        
     })
 
-    async function search(offset){
+    async function search(){
         if (validateIncrement(parseInt(increment.value, 10))){
             if (inputPokemonName.value == "" || inputPokemonName.value.toLowerCase() == "all"){
                 pokemonsCardsContainer.innerHTML = "";
-                await fetchPokemons(offset);
+                await fetchPokemons(0);
                 return
             } else {
                 await fetchPokemon(inputPokemonName.value.toLowerCase()),{trigger: 'hover'}
@@ -263,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     searchButton.addEventListener('click', () => {
-        search(offset);
+        search();
     });
 
     increment.addEventListener('input',() => {
@@ -291,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadMorePokemons.addEventListener('click',()=>{
         if (validateIncrement(parseInt(increment.value, 10))){
+            offset = pokemonsList.indexOf(pokemonsCardsContainer.lastChild.lastChild.firstChild.textContent.toLowerCase()) + 1
             fetchPokemons(offset);
         } else{
             alert('Choose a number between 1 and 20')
@@ -302,11 +297,18 @@ document.addEventListener('DOMContentLoaded', () => {
         inputPokemonName.value = "";
         document.getElementById('pokemonGrowth').classList.remove('hidden')
         if (growthRate == 'All'){
-            offset = pokemonCard.childNodes[3].childNodes[1].id-1;   
+            offset = parseInt(pokemonCard.childNodes[3].childNodes[1].id,10)-1;
         } else {
             offset = pokemonsList.indexOf(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase());
         }
         pokemonsCardsContainer.innerHTML = "";
+        if (pokemonsIncrement > (pokemonsList.length-offset)){
+            pokemonsIncrement = pokemonsList.length-offset
+            if (pokemonsIncrement < 5){
+                offset = pokemonsList.length-5;
+                pokemonsIncrement = 5;
+            }
+        }
         fetchPokemons(offset);
         scrollDown();
     });
