@@ -109,11 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
     async function applySpriteFilter(){
         try{
-            if (pokemonsCardsContainer.childNodes.length == 0 && pokemonCard.childNodes[3].childNodes[1].id != "pokemonId"){
-                fetchPokemon(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase());
-            }
-            else if (pokemonsCardsContainer.childNodes.length > 0){
-                fetchPokemons(offset);
+            if (pokemonsCardsContainer.childNodes.length > 0){
+                if (growthRate == "All"){
+                    offset = parseInt(pokemonsCardsContainer.firstChild.firstChild.id,10)-1;
+                } else {
+                    offset = pokemonsList.indexOf(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase())-1;
+                }
+                let actualIncrement = parseInt(increment.value, 10);
+                increment.value = pokemonsCardsContainer.childNodes.length;
+                pokemonsCardsContainer.innerHTML = "";
+                await fetchPokemons(offset);
+                increment.value = actualIncrement;
             }
         } catch(error){
             console.error('Apply sprite filter error:', error);
