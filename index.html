@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+    <title>Googlemon</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxcmVtIiBoZWlnaHQ9IjFyZW0iIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSJub25lIi8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiA0YzQuMDggMCA3LjQ1IDMuMDUgNy45NCA3aC00LjA2Yy0uNDUtMS43My0yLjAyLTMtMy44OC0zcy0zLjQzIDEuMjctMy44NyAzSDQuMDZDNC41NSA3LjA1IDcuOTIgNCAxMiA0IiBvcGFjaXR5PSIwLjM1Ii8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwczEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAybTAgMmM0LjA4IDAgNy40NSAzLjA1IDcuOTQgN2gtNC4wNmMtLjQ1LTEuNzMtMi4wMi0zLTMuODgtM3MtMy40MyAxLjI3LTMuODcgM0g0LjA2QzQuNTUgNy4wNSA3LjkyIDQgMTIgNG0yIDhjMCAxLjEtLjkgMi0yIDJzLTItLjktMi0ycy45LTIgMi0yczIgLjkgMiAybS0yIDhjLTQuMDggMC03LjQ1LTMuMDUtNy45NC03aDQuMDZjLjQ0IDEuNzMgMi4wMSAzIDMuODcgM3MzLjQzLTEuMjcgMy44Ny0zaDQuMDZjLS40NyAzLjk1LTMuODQgNy03LjkyIDciLz48L3N2Zz4=" type="image/svg+xml">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .fade-out {
+            animation: fadeOut 1s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="max-w-[1440px] h-auto min-h-screen min-w-[320px] m-0 p-0 fade-in flex flex-col justify-between">
+
+    <nav class="flex max-w-screen h-[70px] w-full bg-blue-700 justify-between items-center m-0 p-0">
+        <div class="flex items-center p-2 gap-3">
+            <button class ="hover:bg-blue-500 rounded-lg p-1" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
+                <svg class="self-center h-10 w-10 md:w-[30px] md:h-[30px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="white" d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z"/></g></svg>
+            </button>
+            <svg class="h-10 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.08 0 7.45 3.05 7.94 7h-4.06c-.45-1.73-2.02-3-3.88-3s-3.43 1.27-3.87 3H4.06C4.55 7.05 7.92 4 12 4" opacity="0.35"/><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 2c4.08 0 7.45 3.05 7.94 7h-4.06c-.45-1.73-2.02-3-3.88-3s-3.43 1.27-3.87 3H4.06C4.55 7.05 7.92 4 12 4m2 8c0 1.1-.9 2-2 2s-2-.9-2-2s.9-2 2-2s2 .9 2 2m-2 8c-4.08 0-7.45-3.05-7.94-7h4.06c.44 1.73 2.01 3 3.87 3s3.43-1.27 3.87-3h4.06c-.47 3.95-3.84 7-7.92 7"/></svg>
+            <h1 class="font-bold text-white text-2xl sm:text-4xl">Googlemon</h1>
+        </div>
+        <section class="flex gap-5 m-3 text-sm items-center">
+            <button class="hover:bg-blue-500 p-2 rounded-lg flex items-center gap-3" onclick="location.reload()"><p class="hidden sm:block text-3xl text-white font-bold hover:text-blue-900">Home</p><svg class="w-8 h-8 block sm:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"/><path fill="white" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"/></svg></button>
+        </section> 
+    </nav>
+
+    <main class="h-auto flex flex-col items-center p-[30px] mb-auto">
+        <div class="flex flex-col justify-center items-center">
+            <p id="introParagraph" class="bg-blue-100 rounded-lg border-2 shadow-lg border-blue-700 p-2 mb-5 text-justify text-blue-900 text-md sm:text-xl">This is Googlemon, a web aplication that uses API's to get information about Pokemons. You can type in a name or take a look to all of them by clicking the search button. ¡Have fun learning about Pokemons!</p>
+            <section class="flex flex-col items-center pb-3">
+                <div class="flex items-center pb-3">
+                    <input class="rounded-l-lg min-w-[250px] p-[7px] sm:text-xl sm:w-[550px]" type="text" placeholder="Enter a pokemon name or All">
+                    <button id="searchButton">
+                        <svg id="searchSvg" class="w-10 h-10 bg-blue-500 p-1 rounded-r-lg sm:h-11" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path d="M21 38c9.389 0 17-7.611 17-17S30.389 4 21 4S4 11.611 4 21s7.611 17 17 17Z"/><path stroke-linecap="round" d="M26.657 14.343A7.98 7.98 0 0 0 21 12a7.98 7.98 0 0 0-5.657 2.343m17.879 18.879l8.485 8.485"/></g></svg>
+                    </button>
+                    <svg id="questionMark" class="w-6 h-6 ml-5 hidden md:block" data-tooltip-target="tooltip-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="#2828ac" d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896m23.744 191.488c-52.096 0-92.928 14.784-123.2 44.352c-30.976 29.568-45.76 70.4-45.76 122.496h80.256c0-29.568 5.632-52.8 17.6-68.992c13.376-19.712 35.2-28.864 66.176-28.864c23.936 0 42.944 6.336 56.32 19.712c12.672 13.376 19.712 31.68 19.712 54.912c0 17.6-6.336 34.496-19.008 49.984l-8.448 9.856c-45.76 40.832-73.216 70.4-82.368 89.408c-9.856 19.008-14.08 42.24-14.08 68.992v9.856h80.96v-9.856c0-16.896 3.52-31.68 10.56-45.76c6.336-12.672 15.488-24.64 28.16-35.2c33.792-29.568 54.208-48.576 60.544-55.616c16.896-22.528 26.048-51.392 26.048-86.592q0-64.416-42.24-101.376c-28.16-25.344-65.472-37.312-111.232-37.312m-12.672 406.208a54.27 54.27 0 0 0-38.72 14.784a49.4 49.4 0 0 0-15.488 38.016c0 15.488 4.928 28.16 15.488 38.016A54.85 54.85 0 0 0 523.072 768c15.488 0 28.16-4.928 38.72-14.784a51.52 51.52 0 0 0 16.192-38.72a51.97 51.97 0 0 0-15.488-38.016a55.94 55.94 0 0 0-39.424-14.784"/></svg>
+                    <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-500 opacity-[0.8] rounded-lg shadow-sm opacity-0 tooltip">
+                        Also just click to search all
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                <section id="filters" class="flex gap-3">
+                    <button id="pokemonView" data-dropdown-toggle="flipOptions" data-dropdown-trigger="hover" class="text-sm sm:text-lg flex justify-start bg-blue-900 hover:bg-blue-600 justify-start items-center rounded-full px-3 py-1 text-white font-bold" type="button">Sprites<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                        </button>
+                        <div id="flipOptions" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-auto bg-blue-900 max-h-[200px] overflow-y-auto">
+                            <ul id="viewSpriteList" class="py-2 text-sm " aria-labelledby="pokemonView"></ul>
+                        </div>
+                    <button id="pokemonGrowth" data-dropdown-toggle="growthOptions" data-dropdown-trigger="hover" class="text-sm sm:text-lg flex justify-start bg-blue-900 hover:bg-blue-600 justify-start items-center rounded-full px-3 py-1 text-white font-bold" type="button">Growth Rate<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                        </button>
+                        <div id="growthOptions" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-auto bg-blue-900 max-h-[200px] overflow-y-auto">
+                            <ul id="growthList" class="py-2 text-sm" aria-labelledby="pokemonStats">
+                                <button id="growthAll" class="growthButton px-4 py-2 text-white hover:bg-blue-600 text-sm sm:text-lg w-full flex justify-start">All</button>
+                            </ul>
+                        </div>
+                </section>  
+            </section>
+        </div>   
+        <div id="pokemonCard" class="w-[250px] h-auto sm:w-[350px] mt-3 bg-white rounded-lg overflow-auto flex flex-col">
+            <img class="w-[250px] min-h-[150px] sm:w-[350px] sm:h-[250px] self-center" src="./image.png" alt="pokemon image" />
+            <div class="flex flex-col m-2 p-2 gap-2">
+                <p id="pokemonId"></p>
+                <p id="pokemonName" class="hidden self-center font-bold text-base sm:text-xl">Pikachu</p>
+                <p id="pokemonWeight" class="hidden text-s sm:text-base"><strong>Weight: </strong></p>
+                <p id="pokemonHabitat" class="hidden text-s sm:text-base"><strong>Habitat: </strong></p>
+                <p id="pokemonAbilities" class="hidden text-s sm:text-base"><strong>Abilities: </strong></p>
+            </div>
+            <button id="continueButton" class="hidden bg-blue-500 flex justify-center items-center text-white rounded-lg w-[100px] self-center p-1 m-2 hover:bg-blue-800">Continue</button>
+        </div>
+        <div id="pokemonsCardsContainer" class="hidden inline-flex flex-wrap justify-center mt-6 gap-4 bg-blue-100 rounded-lg shadow-lg border-blue-200 border-2 p-4"></div>
+        <div class="flex items-center justify-center">
+            <button id="loadPokemons" class="hidden bg-blue-700 p-3 rounded-lg opacity-[0.6] hover:opacity-[1] focus:ring-2 text-white m-3">Load More</button>
+            <input class="hidden md:hidden rounded-lg text-xl" type="number" id="pokemonsIncrement" min="1" max="20" value="5">
+        </div>
+    </main>
+
+    <aside>
+        <div id="drawer-navigation" class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-blue-900 flex flex-col justify-start items-start" tabindex="-1" aria-labelledby="drawer-navigation-label">
+            <h1 id="drawer-navigation-label" class="text-base font-semibold text-gray-300 uppercase">Menu</h1>
+            <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="bg-transparent hover:bg-blue-600  rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center" >
+                <svg aria-hidden="true" class="w-5 h-5 hover:fill-white" fill="#d4d4d4" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+            <div class="w-full h-[90%] flex flex-col justify-start items-start gap-3 py-3">
+                <a href="https://pokeapi.co/#google_vignette" target="_blank" class="text-white border-2 border-blue-700 hover:bg-blue-700 flex justify-start items-center w-full rounded-md p-2  font-bold text-muted">
+                    API
+                </a>
+                <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-white flex gap-20 justify-start border-2 border-blue-700 hover:bg-blue-700 flex justify-start items-center w-full rounded-md p-2 font-bold text-muted" type="button">Endpoints<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                    </button>
+                    <div id="dropdownHover" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44 bg-blue-700">
+                        <ul class="py-2 text-sm" aria-labelledby="dropdownHoverButton">
+                        <li>
+                            <a href="https://pokeapi.co/docs/v2#pokemon" target="_blank" class="block text-base px-4 py-2 hover:bg-blue-600 text-white">Pokemon</a>
+                        </li>
+                        <li>
+                            <a href="https://pokeapi.co/docs/v2#pokemon-species" target="_blank" class="block text-base px-4 py-2 hover:bg-blue-600 text-white">Species</a>
+                        </li>
+                        <li>
+                            <a href="https://pokeapi.co/docs/v2#growth-rates" target="_blank" class="block text-base px-4 py-2 hover:bg-blue-600 text-white">Growth Rate</a>
+                        </li>
+                        </ul>
+                    </div>
+            </div>                
+        </div>
+    </aside>
+
+    <footer class="bg-blue-600 h-14 flex items-center justify-end w-full gap-5 px-3 pr-2 md:h-14">
+        <a href="#top" class="font-bold text-white pr-3 pl-1 flex items-center gap-1 md:text-xl">
+            <svg class="h-5 w-5 md:h-8 md: w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 4c4.08 0 7.45 3.05 7.94 7h-4.06c-.45-1.73-2.02-3-3.88-3s-3.43 1.27-3.87 3H4.06C4.55 7.05 7.92 4 12 4" opacity="0.35"/><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 2c4.08 0 7.45 3.05 7.94 7h-4.06c-.45-1.73-2.02-3-3.88-3s-3.43 1.27-3.87 3H4.06C4.55 7.05 7.92 4 12 4m2 8c0 1.1-.9 2-2 2s-2-.9-2-2s.9-2 2-2s2 .9 2 2m-2 8c-4.08 0-7.45-3.05-7.94-7h4.06c.44 1.73 2.01 3 3.87 3s3.43-1.27 3.87-3h4.06c-.47 3.95-3.84 7-7.92 7"/></svg>
+            Googlemon
+        </a>
+        <div class="flex md:gap-3 items-center">
+            <a href="https://youtu.be/V_cMYN3jAjg?si=J-ES2ia7XJM0Ltft" target="_blank"><svg class="w-8 h-8 md:h-10 md:w-10 hover:bg-blue-800 p-1 rounded-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M508.64 148.79c0-45-33.1-81.2-74-81.2C379.24 65 322.74 64 265 64h-18c-57.6 0-114.2 1-169.6 3.6C36.6 67.6 3.5 104 3.5 149C1 184.59-.06 220.19 0 255.79q-.15 53.4 3.4 106.9c0 45 33.1 81.5 73.9 81.5c58.2 2.7 117.9 3.9 178.6 3.8q91.2.3 178.6-3.8c40.9 0 74-36.5 74-81.5c2.4-35.7 3.5-71.3 3.4-107q.34-53.4-3.26-106.9M207 353.89v-196.5l145 98.2Z"/></svg></a>
+            <a href="https://x.com/pokeapi" target="_blank"><svg class="w-8 h-8 md:h-10 md:w-10 hover:bg-blue-800 p-1 rounded-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="white" d="M19.753 4.659a1 1 0 0 0-1.506-1.317l-5.11 5.84L8.8 3.4A1 1 0 0 0 8 3H4a1 1 0 0 0-.8 1.6l6.437 8.582l-5.39 6.16a1 1 0 0 0 1.506 1.317l5.11-5.841L15.2 20.6a1 1 0 0 0 .8.4h4a1 1 0 0 0 .8-1.6l-6.437-8.582l5.39-6.16ZM16.5 19L6 5h1.5L18 19z"/></g></svg></a>
+            <a href="https://github.com/PokeAPI/pokeapi" target="_blank"><svg class="w-8 h-8 md:h-10 md:w-10 hover:bg-blue-800 p-1 rounded-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="white" fill-rule="evenodd" d="M49.998 11.963C28.461 11.963 11 29.425 11 50.965c0 17.231 11.172 31.849 26.671 37.003c1.952.361 2.662-.84 2.662-1.877c0-.924-.034-3.375-.051-6.633c-10.849 2.359-13.138-5.229-13.138-5.229c-1.774-4.505-4.331-5.703-4.331-5.703c-3.541-2.418.269-2.371.269-2.371c3.914.277 5.974 4.018 5.974 4.018c3.478 5.96 9.129 4.235 11.35 3.243c.353-2.525 1.363-4.24 2.476-5.217c-8.659-.984-17.763-4.33-17.763-19.274c0-4.259 1.519-7.741 4.013-10.468c-.399-.982-1.74-4.947.383-10.319c0 0 3.274-1.048 10.726 4.001c3.109-.869 6.446-1.303 9.763-1.316c3.312.014 6.65.447 9.763 1.316c7.447-5.049 10.716-4.001 10.716-4.001c2.128 5.372.788 9.337.388 10.319c2.5 2.727 4.008 6.209 4.008 10.468c0 14.979-9.117 18.279-17.805 19.241c1.398 1.205 2.646 3.59 2.646 7.229c0 5.211-.047 9.416-.047 10.695c0 1.045.701 2.26 2.681 1.873C77.836 82.798 89 68.191 89 50.965c0-21.54-17.461-39.002-39.002-39.002" clip-rule="evenodd"/></svg></a>
+            <a href="https://www.instagram.com/pokemon/" target="_blank"><svg class="w-8 h-8 md:h-10 md:w-10 hover:bg-blue-800 p-1 rounded-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none"><path stroke="white" stroke-linejoin="round" stroke-width="4" d="M34 6H14a8 8 0 0 0-8 8v20a8 8 0 0 0 8 8h20a8 8 0 0 0 8-8V14a8 8 0 0 0-8-8Z"/><path stroke="white" stroke-linejoin="round" stroke-width="4" d="M24 32a8 8 0 1 0 0-16a8 8 0 0 0 0 16Z"/><path fill="white" d="M35 15a2 2 0 1 0 0-4a2 2 0 0 0 0 4"/></g></svg></a>
+            
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
+
