@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.querySelectorAll('.growthButton').forEach(element => element.classList.remove('hidden'));
                     document.getElementById(data.results[i].name).classList.add('hidden');
                     document.getElementById('pokemonGrowth').innerHTML = `${growthName}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>`;
+                    document.getElementById('pokemonsIncrement').value = 5;
                     applyGrowthFilter();
                 })
             }
@@ -136,11 +137,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const pokemonWeight = document.getElementById('pokemonWeight');
             const pokemonHabitat = document.getElementById('pokemonHabitat');
             const pokemonAbilities = document.getElementById('pokemonAbilities');
-
-            const endpointSpecies = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name.toLowerCase()}/`); //Retrieve the habitat for the given the pokemon.
-            const pokemonSpecieData = await endpointSpecies.json();
-            const habitat = pokemonSpecieData.habitat ? pokemonSpecieData.habitat.name : 'Unknown';
-
+            let habitat = 'Unknown';
+            try {
+                const endpointSpecies = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name.toLowerCase()}/`); //Retrieve the habitat for the given the pokemon.
+                const pokemonSpecieData = await endpointSpecies.json();
+                habitat = pokemonSpecieData.habitat ? pokemonSpecieData.habitat.name : 'Unknown';
+            } catch(error){
+                console.error('Fetch Habitat error:',error);
+            }
             pokemonCard.childNodes[3].childNodes[1].id = `${data.id}`;
             pokemonImage.src = data.sprites[spriteView];
             pokemonName.textContent = data.name.charAt(0).toUpperCase() + data.name.slice(1);
@@ -163,8 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
             questionMark.classList.add('md:hidden');
             document.getElementById('pokemonGrowth').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
-
         } catch (error) {
             console.error('Error fetching Pokemon:', error);
             alert(`Could not find pokemon " ${name} "`);
@@ -177,7 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
             pokemonsList = await filterPokemonsByGrowth(growthRate);
             pokemonsIncrement = parseInt(increment.value,10);
             if (window.innerWidth <= 640){
-                pokemonsIncrement = 3;
+                pokemonsIncrement = 5;
+            }
+            if (pokemonsIncrement > (pokemonsList.length-offset)){
+                pokemonsIncrement = pokemonsList.length-offset
+                if (pokemonsIncrement < 5){
+                    offset = pokemonsList.length-5;
+                    pokemonsIncrement = 5;
+                }
             }
             for (let i = offset; i < (offset+pokemonsIncrement); i++){
                 const newPokemonCard = document.createElement('button');
@@ -187,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const endpointPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonsList[i]}/`);
                 const newPokemon = await endpointPokemon.json();
                 newPokemonCard.classList.add("w-[250px]","h-auto","sm:w-[235px]","sm:h-auto","p-0","h-auto","bg-white","rounded-lg","shadow-lg","flex","flex-col","justify-center","items-center","hover:bg-blue-200");
-                newPokemonCard.innerHTML = `<img id="${newPokemon.id}" class="h-auto w-[250px] self-center" src="${newPokemon.sprites[spriteView]}" alt="pokemon image" /><div class="flex flex-col p-3 px-5 gap-2 justify-center items-center"><p class="self-center font-bold text-3xl text-blue-900 text-xl">${pokemonsList[i].charAt(0).toUpperCase() + pokemonsList[i].slice(1)}</p></div>`;
+                newPokemonCard.innerHTML = `<img id="${newPokemon.id}" class="h-auto w-[250px] self-center" src="${newPokemon.sprites[spriteView]}" alt="${pokemonsList[i]}" /><div class="flex flex-col p-3 px-5 gap-2 justify-center items-center"><p class="self-center font-bold text-3xl text-blue-900 text-xl">${pokemonsList[i].charAt(0).toUpperCase() + pokemonsList[i].slice(1)}</p></div>`;
                 pokemonsCardsContainer.append(newPokemonCard);
             }
             pokemonCard.classList.add('hidden');
@@ -237,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (validateIncrement(parseInt(increment.value, 10))){
             if (inputPokemonName.value == "" || inputPokemonName.value.toLowerCase() == "all"){
                 pokemonsCardsContainer.innerHTML = "";
-                fetchPokemons(offset);
+                await fetchPokemons(offset);
                 return
             } else {
                 await fetchPokemon(inputPokemonName.value.toLowerCase()),{trigger: 'hover'}
@@ -282,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadMorePokemons.addEventListener('click',()=>{
         if (validateIncrement(parseInt(increment.value, 10))){
-            fetchPokemons(offset)
+            fetchPokemons(offset);
         } else{
             alert('Choose a number between 1 and 20')
         }
@@ -292,8 +301,11 @@ document.addEventListener('DOMContentLoaded', () => {
     continueButton.addEventListener('click', () => {
         inputPokemonName.value = "";
         document.getElementById('pokemonGrowth').classList.remove('hidden')
-        offset = pokemonCard.childNodes[3].childNodes[1].id-1;
-        pokemonsIncrement = pokemonsCardsContainer.childNodes.length;
+        if (growthRate == 'All'){
+            offset = pokemonCard.childNodes[3].childNodes[1].id-1;   
+        } else {
+            offset = pokemonsList.indexOf(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase());
+        }
         pokemonsCardsContainer.innerHTML = "";
         fetchPokemons(offset);
         scrollDown();
