@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let offset = 0;
     let pokemonsIncrement = parseInt(increment.value,10);
     let spriteView = 'front_default';
-    let growthRate = 'All';
+    let growthRate = 'all';
     let pokemonsList = [];
   
     window.addEventListener('beforeunload', () => {
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function buttonsGrowth(){
         try {
-            const response = await fetch('https://pokeapi.co/api/v2/growth-rate//');
+            const response = await fetch('https://pokeapi.co/api/v2/growth-rate//'); // Retrieve all the possible growth rates
             const data = await response.json();
             for (let i = 0; i < data.results.length; i++){
                 let growthName = (data.results[i].name.charAt(0).toUpperCase()+data.results[i].name.slice(1)).replace(/-/g, ' ');
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
             }
             document.getElementById('growthAll').addEventListener('click',()=>{
-                growthRate = 'All';
+                growthRate = 'all';
                 document.querySelectorAll('.growthButton').forEach(element => element.classList.remove('hidden'));
                 document.getElementById('growthAll').classList.add('hidden');
                 document.getElementById('pokemonGrowth').innerHTML = `${growthRate}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>`;
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < allPokemons.results.length; i++){
                 allPokemonsList.push(allPokemons.results[i].name)
             }
-            if (growthRate == 'All') {
+            if (growthRate == 'all') {
                 pokemonsList = allPokemonsList;
                 return pokemonsList;
             }
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function applySpriteFilter(){
         try{
             if (pokemonsCardsContainer.childNodes.length > 0 && !pokemonsCardsContainer.classList.contains('hidden')){
-                if (growthRate == "All"){
+                if (growthRate == "all"){
                     offset = parseInt(pokemonsCardsContainer.firstChild.firstChild.id,10)-1;
                 } else {
                     offset = pokemonsList.indexOf(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase())+1;
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return
             } else {
                 await fetchPokemon(inputPokemonName.value.toLowerCase()),{trigger: 'hover'}
-                growthRate = 'All';
+                growthRate = 'all';
                 document.querySelectorAll('.growthButton').forEach(element => element.classList.remove('hidden'));
                 document.getElementById('growthAll').classList.add('hidden');
                 document.getElementById('pokemonGrowth').innerHTML = `${growthRate}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>`;
@@ -308,23 +308,31 @@ document.addEventListener('DOMContentLoaded', () => {
     );
     
     continueButton.addEventListener('click', () => {
-        inputPokemonName.value = "";
-        document.getElementById('pokemonGrowth').classList.remove('hidden')
-        if (growthRate == 'All'){
-            offset = parseInt(pokemonCard.childNodes[3].childNodes[1].id,10)-1;
-        } else {
-            offset = pokemonsList.indexOf(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase());
-        }
-        pokemonsCardsContainer.innerHTML = "";
-        if (pokemonsIncrement > (pokemonsList.length-offset)){
-            pokemonsIncrement = pokemonsList.length-offset
-            if (pokemonsIncrement < 5){
-                offset = pokemonsList.length-5;
-                pokemonsIncrement = 5;
+        if (pokemonsList.includes(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase())){
+            inputPokemonName.value = "";
+            document.getElementById('pokemonGrowth').classList.remove('hidden')
+            if (growthRate == 'all'){
+                offset = parseInt(pokemonCard.childNodes[3].childNodes[1].id,10)-1;
+            } else {
+                offset = pokemonsList.indexOf(pokemonCard.childNodes[3].childNodes[3].textContent.toLowerCase());
             }
+            pokemonsCardsContainer.innerHTML = "";
+            if (pokemonsIncrement > (pokemonsList.length-offset)){
+                pokemonsIncrement = pokemonsList.length-offset
+                if (pokemonsIncrement < 5){
+                    offset = pokemonsList.length-5;
+                    pokemonsIncrement = 5;
+                }
+            }
+            fetchPokemons(offset);
+            scrollDown();
+        } else{
+            growthRate = 'all';
+            pokemonsCardsContainer.innerHTML = "";
+            offset = parseInt(pokemonCard.childNodes[3].childNodes[1].id,10)-1;
+            fetchPokemons(offset);
+            document.getElementById('pokemonGrowth').classList.remove('hidden');
         }
-        fetchPokemons(offset);
-        scrollDown();
     });
 
 });
