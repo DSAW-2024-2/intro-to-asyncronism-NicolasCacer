@@ -203,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
             questionMark.classList.add('md:hidden');
             offsetParam += pokemonsIncrement
             offset = offsetParam;
-            console.log(offset,pokemonsIncrement)
             
         } catch (error) {
             console.error('Error fetching Pokemons:', error);
@@ -219,7 +218,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function validateIncrement(input) {
-        return input >= 1 && input <= 20;
+        if (input >= 1 && input <= 20){
+            if (pokemonsList.length-offset == 0){
+                alert(`There are no pokemons left`)
+                increment.value = pokemonsList.length-offset;
+            } else if (input+offset > pokemonsList.length){
+                alert(`There are only ${pokemonsList.length-offset} pokemons left`)
+                increment.value = pokemonsList.length-offset;
+            }
+            return true
+        }
+        alert('Please choose a number between 1 and 20')
+        return false;
     }
 
     inputPokemonName.addEventListener('input',() => {
@@ -237,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     async function search(){
+        pokemonsList = filterPokemonsByGrowth(growthRate);
         if (validateIncrement(parseInt(increment.value, 10))){
             if (inputPokemonName.value == "" || inputPokemonName.value.toLowerCase() == "all"){
                 pokemonsCardsContainer.innerHTML = "";
@@ -250,9 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('pokemonGrowth').innerHTML = `${growthRate}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>`;
                 return
             }
-        }
-        else {
-            alert('Choose an increment between 1 and 20 pokemons')
         }
     }
     
@@ -270,7 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
            increment.classList.add('bg-red-100','ring-2', 'ring-red-500');
            loadMorePokemons.classList.add('hover:opacity-[0.6]','cursor-not-allowed')
            loadMorePokemons.disabled = true;
-           alert('Choose a number between 1 and 20')
         }
     });
 
@@ -287,8 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (validateIncrement(parseInt(increment.value, 10))){
             offset = pokemonsList.indexOf(pokemonsCardsContainer.lastChild.lastChild.firstChild.textContent.toLowerCase()) + 1
             fetchPokemons(offset);
-        } else{
-            alert('Choose a number between 1 and 20')
         }
     }
     );
